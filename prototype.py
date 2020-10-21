@@ -43,7 +43,6 @@ t_eval = np.linspace(0, 1, 1000)
 y0 = np.array([0.0, 0.0])
 
 fig = plt.figure()
-
 for model in [model1_args, model2_args]:
     args = [
         model['Q_p1'], model['V_c'], model['V_p1'], model['CL'], model['X']
