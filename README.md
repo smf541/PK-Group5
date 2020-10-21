@@ -4,4 +4,11 @@
 
 [![BCH compliance](https://bettercodehub.com/edge/badge/smf541/PK-Group5?branch=master)](https://bettercodehub.com/)
 
-starter pk modelling repository
+[![Documentation Status](https://readthedocs.org/projects/pk-model/badge/?version=latest)](https://pk-model.readthedocs.io/en/latest/?badge=latest)
+
+
+# PK Model
+
+A repository containing our Python library for specifying, solving and visualising a pharmokinetic model. 
+
+Find our documentation here: https://pk-model.readthedocs.io/en/latest/
