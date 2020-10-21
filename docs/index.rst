@@ -10,6 +10,8 @@ Welcome to PK Model's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   quickstart
+
 Hello World!
 
 Indices and tables
