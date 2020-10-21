@@ -1,3 +1,5 @@
+> This library is in ALPHA version. The API is defined but subject to change as we further develop the functionality and our understanding of the product.
+
 # 2020-software-engineering-projects-pk
 
 [![codecov](https://codecov.io/gh/smf541/PK-Group5/branch/master/graph/badge.svg)](https://codecov.io/gh/smf541/PK-Group5)
@@ -11,4 +13,26 @@
 
 A repository containing our Python library for specifying, solving and visualising a pharmokinetic model. 
 
-Find our documentation here: https://pk-model.readthedocs.io/en/latest/
+## Using the PK Model library
+
+Add usage example once classes and functions are defined.
+
+[Find our documentation here](https://pk-model.readthedocs.io/en/latest/ "PK Model Documentation")
+
+## Installing PK Model
+
+The latest release of the PK Model library can be installed simply by typing
+
+```bash
+pip install --upgrade pip
+pip install PKModel
+```
+in a console. 
+PK Model is compatible with Python versions 3.5+. 
+If you wish to uninstall the library, you can do so by typing in the console:
+```bash
+pip uninstall PKModel
+```
+
+
+
