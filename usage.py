@@ -4,11 +4,11 @@
 import pkmodel as pk
 
 
-model1 = pk.model( 'name', 'V_c'=1.0, 'CL'=1.0, 'X'=1.0, 'Ka_q0'=1.0 )
+model1 = pk.model(name, V_c=1.0, CL=1.0, X=1.0, Ka_q0=1.0)
 model1.name
-model1.add_compartment( Q_p, V_p )
+model1.add_compartment(Q_p, V_p)
 model1.list()
-model1.remove( idx )
+model1.remove(idx)
 model1.v_c()
 ...
 
@@ -21,13 +21,14 @@ model1_args = {
     'X': 1.0,
 }
 
-proto1 = pk.protocol( 'type', dose, t_eval, y0 )
-proto1.type
+proto1 = pk.protocol(proto_type, dose, t_eval, y0)
+proto1.proto_type
 proto1.dose()
 ...
 
 solution = pk.solution()
-solution.add( model1, proto1 )
+solution.add(model1, proto1)
 solution.list()
-solution.remove( idx )
-solution.visualise( plt_params ) # maybe
+solution.remove(idx)
+solution.visualise(plt_params)  # maybe
+
