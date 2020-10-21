@@ -31,3 +31,4 @@ solution.add(model1, proto1)
 solution.list()
 solution.remove(idx)
 solution.visualise(plt_params)  # maybe
+
