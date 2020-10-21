@@ -9,7 +9,7 @@ class Model:
     ----------
 
     value: numeric, optional
-        an example paramter
+        an example parameter
 
     """
     def __init__(self, value=42):
