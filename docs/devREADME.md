@@ -16,8 +16,11 @@ pip install -r dev_requirements.txt
 
 ## Workflow 
 checking out branch
+
 adding and committing changes
+
 pushing those to branch
+
 then pull request
 
 ## Naming conventions
