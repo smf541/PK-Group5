@@ -21,7 +21,7 @@ class Model:
         # Verify argument types
         if delivery_mode not in ['intravenous', 'iv', 'IV', 'subcutaneous', 'subq', 'sc', 'SC']:  # noqa: E501
             raise ValueError('Given delivery_mode invalid; try "intravenous" or "subcutaneous"')  # noqa: E501
-            # inline comments to flake8 to ignore line length needed for string checks
+            # inline comments to flake8 to ignore line length for strings
         if type(V_c) not in [int, float]:
             raise TypeError('V_c must be int or float')
         if type(CL) not in [int, float]:
