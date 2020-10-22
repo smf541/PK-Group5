@@ -28,6 +28,9 @@ class Solution:
 
     @property
     def list(self):
+        """
+        Lists the (model, protocol) combinations in the solution object
+        """
         out = []
         # we can assume protocols same length as methods, as user only adds
         # them as a pair 
@@ -40,12 +43,79 @@ class Solution:
         self.models.remove(model)
         self.protocols.remove(protocol)
 
-    def solution(self, model, protocol, time_res=100):
-        # y0 = model.initial_value.append(protocol.starting_dose)
-        if model == 1:
-            return [i**3 for i in range(0, time_res)]
+    # Below two functions don't strictly need to be a class method, 
+    # could have them as external functions and call them in, but that's
+    # not as clean 
+
+    def get_model_variables(self, model):
+        """
+        Takes a Model object and returns the variables in it as a
+        1-D array 
+
+        Parameters:
+        ----------
+
+        model: Model object
+
+        returns: 1-D numpy array
+        """
+        
+
+    def ode_system(self, model, protocol, t=0):
+        """
+        Takes as input a Model object and a Protocol object, 
+        then returns the system of ODEs for this pair 
+
+        Parameters:
+        ----------
+
+        model: Model object
+        protocol: Protocol object
+
+        returns: 1-D list of ordinary differential equations 
+        """
+        dose_fn = protocol.dose()
+        # From what I remember of how odeint works, it's enough to pass it
+        # a list of expressions, which calculate a value
+        # So, try and express the system as such:
+
+        # First unpack the variables, which should be a list of 
+
+    def solution(self, model, protocol, time):
+        """
+        Calcuates the ODE solution for a specific model and protocol
+
+        Parameters:
+        ----------
+
+        model: Model object
+        protocol: Protocol object
+        time: numpy 1-D array, gives the time array for passing to odeint
+
+        returns: numpy ndarray, containing the numerical solutions to the system
+        """
+        with numpy as np:
+            y0 = np.zeros((len(model)+1), dtype=float)
+            # set the first element of the initial conditions array y0
+            # to be the initial value of the 0th compartment, which is the 
+            # compartment in which we get drug delivery (central for intravenous)
+            y0[0] = protocol.starting_dose
+        # Now we need to define the model in terms of ODEs
+        system = self.ode_system(model, protocol)
+        numerical_solution = scipy.integrate.odeint(func=system, y0=y0, t=time)
+
+        if model.delivery_mode == 'intravenous':
+            return numerical_solution[0]
+        elif model.delivery_mode == 'subcutaneous':
+            return numerical_solution[1]
         else:
-            return [i**2 for i in range(0, time_res)]
+            raise ValueError("Model delivery mode incorrectly defined. Options are: 'intravenous', or 'subcutaneous'.")
+
+
+    # IMPORTANT - 
+    # If intravenous, we are interested in plotting the variable in the 0th 
+    # position of the array defined above. If subcutaneous, we are interested
+    # in the variable at the 1th position.
 
     def visualise(self, inputs=self.list, layout='overlay', time_res=100):
         """
