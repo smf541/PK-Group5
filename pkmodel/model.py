@@ -18,33 +18,37 @@
 
 class Model:
     """The Model class holds the pharmacokinetic parameters chosen for the model.
-    These are properties of the compartments unrelated to the dose protocol.
+    The delivery method can be specified, including options for
+    intravenous or subcutaneous dosing.
     The Ka property is an absorption rate relevant for non-intravenous dosing.
     """
-    def __init__(self, V_c=1.0, CL=1.0, Ka=1.0):
+    def __init__(self, delivery_mode: str, V_c=1.0, CL=1.0, Ka=1.0):
         """Initialises a model with chosen pharmacokinetic parameters and name.
         Defaults to central compartment with V_c = 1.0 mL, CL = 1.0 mL/h, and
         Ka = 1.0 /h with no additional peripheral compartments.
         Args:
+            delivery_mode (str): the chosen delivery mode for dosing. Supported
+                options include 'intravenous' ('intravenous', 'iv', or 'IV')
+                or 'subcutaneous' ('subcutaneous', 'subq', 'sc', or 'SC')
             V_c (float): the volume of the central compartment [mL]
             CL (float): the clearance/elimination rate from the central
                 compartment [mL/h]
             Ka (float): the absorption rate,
                 for example for subcutaneous dosing [/h]
         """
-        # Verify that arguments are numbers
-        if V_c != V_c:  # will return True if NaN
-            raise TypeError('V_c is NaN, requires int or float')
-        if CL != CL:  # will return True if NaN
-            raise TypeError('CL is NaN, requires int or float')
-        if Ka != Ka:  # will return True if NaN
-            raise TypeError('Ka is NaN, requires int or float')
+        # Verify argument types
+        if delivery_mode not in ['intravenous', 'iv', 'IV', 'subcutaneous', 'subq', 'sc', 'SC']:
+            raise ValueError('Given delivery_mode invalid; try "intravenous" or "subcutaneous"')
         if type(V_c) not in [int, float]:
             raise TypeError('V_c must be int or float')
         if type(CL) not in [int, float]:
             raise TypeError('CL must be int or float')
         if type(Ka) not in [int, float]:
             raise TypeError('Ka must be int or float')
+        if delivery_mode in ['intravenous', 'iv', 'IV']:
+            self.__delivery_mode = 'iv'
+        if delivery_mode in ['subcutaneous', 'subq', 'sc', 'SC']:
+            self.__delivery_mode = 'sc'
         self.__V_c = V_c
         self.__CL = CL
         self.__Ka = Ka
@@ -75,7 +79,7 @@ class Model:
         """str: name is a property constructed from the model parameters.
         This protects data integrity by tying results to an immutable label.
         """
-        self.__Name = "Model-V_c=" + str(self.__V_c) + "-CL=" + str(self.__CL) + "-Ka=" + str(self.__Ka) + "-" + str(len(self.__V_p)) + "compartments"
+        self.__Name = "Model-" + self.__delivery_mode + "-V_c=" + str(self.__V_c) + "-CL=" + str(self.__CL) + "-Ka=" + str(self.__Ka) + "-" + str(len(self.__V_p)) + "compartments"
         return self.__Name
 
     @property
@@ -106,14 +110,10 @@ class Model:
                 compartment and the peripheral compartment being added [mL/h]
         """
         # Verify that V_p_new and Q_p_new inputs are numbers
-        if V_p_new != V_p_new:  # will return True if NaN
-            raise TypeError('V_p_new is NaN, requires int or float')
-        if Q_p_new != Q_p_new:  # will return True if NaN
-            raise TypeError('Q_p_new is NaN, requires int or float')
         if type(Q_p_new) not in [int, float]:
             raise TypeError('Q_p_new must be int or float')
         if type(V_p_new) not in [int, float]:
-            raise TypeError('Q_p_new must be int or float')
+            raise TypeError('V_p_new must be int or float')
         self.__V_p.append(V_p_new)
         self.__Q_p.append(Q_p_new)
 
@@ -124,4 +124,21 @@ class Model:
         for i in range(len(self.__V_p)):
             list_compartments.append([self.__V_p[i], self.__Q_p[i]])
         return list_compartments
+    
+    def remove_compartment(self, index: int):
+        """Removes peripheral compartment at given index. Index refers to the
+        compartment's position given in model.list_compartments().
 
+        Args:
+        index (int): the index of the compartment to be removed,
+            referring to V_p[index] and Q_p[index]; non-negative
+        """
+        # Verify valid index choice
+        if index < 0:
+            raise ValueError('Index must be a non-negative integer')
+        if index not in range(len(V_p)):
+            raise ValueError('Invalid index for V_p')
+        if index not in range(len(Q_p)):
+            raise ValueError('Invalid index for Q_p')
+        del V_p[index]
+        del Q_p[index]
