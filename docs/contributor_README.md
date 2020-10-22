@@ -35,4 +35,4 @@ The console will print out a link which you can follow to create a pull request.
 ## Naming conventions
 
 Most methods and functions have one-word names. Where the name consists of multiple words, these are connected by an underscore (_). 
-Variable names are kept consistent with the model equations that form the base of [this library's functionalities](https://github.com/smf541/PK-Group5#pk-model, "Functionality")). 
+Variable names are kept consistent with the model equations that form the base of [this library's functionalities](https://github.com/smf541/PK-Group5#pk-model, "Functionality"). 
