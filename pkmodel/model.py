@@ -1,21 +1,3 @@
-#
-# Model class
-# model object inputs: V_c=1.0, CL=1.0, Ka=1.0
-
-# [x]implement name method
-# [x]implement add_compartment( Q_p, V_p) function
-# [x]implement list_compartments() function: list compartments and their params
-# [x]implement __str__ method
-# [x] implement __len__ method
-# []implement remove( idx ) function
-# []implement getters and setters v_c() function
-#
-#  Args:
-#           param1 (str): Description of `param1`.
-#           param2 (:obj:`int`, optional): Description of `param2`. Multiple
-#              lines are supported.
-#           param3 (:obj:`list` of :obj:`str`): Description of `param3`.
-
 class Model:
     """The Model class holds the pharmacokinetic parameters chosen for the model.
     The delivery method can be specified, including options for
@@ -37,8 +19,8 @@ class Model:
                 for example for subcutaneous dosing [/h]
         """
         # Verify argument types
-        if delivery_mode not in ['intravenous', 'iv', 'IV', 'subcutaneous', 'subq', 'sc', 'SC']:
-            raise ValueError('Given delivery_mode invalid; try "intravenous" or "subcutaneous"')
+        if delivery_mode not in ['intravenous', 'iv', 'IV', 'subcutaneous', 'subq', 'sc', 'SC']:  # noqa: E501
+            raise ValueError('Given delivery_mode invalid; try "intravenous" or "subcutaneous"')  # noqa: E501
         if type(V_c) not in [int, float]:
             raise TypeError('V_c must be int or float')
         if type(CL) not in [int, float]:
@@ -79,7 +61,7 @@ class Model:
         """str: name is a property constructed from the model parameters.
         This protects data integrity by tying results to an immutable label.
         """
-        self.__Name = "Model-" + self.__delivery_mode + "-V_c=" + str(self.__V_c) + "-CL=" + str(self.__CL) + "-Ka=" + str(self.__Ka) + "-" + str(len(self.__V_p)) + "compartments"
+        self.__Name = "Model-" + self.__delivery_mode + "-V_c=" + str(self.__V_c) + "-CL=" + str(self.__CL) + "-Ka=" + str(self.__Ka) + "-" + str(len(self.__V_p)) + "compartments"  # noqa: E501
         return self.__Name
 
     @property
@@ -124,7 +106,7 @@ class Model:
         for i in range(len(self.__V_p)):
             list_compartments.append([self.__V_p[i], self.__Q_p[i]])
         return list_compartments
-    
+
     def remove_compartment(self, index: int):
         """Removes peripheral compartment at given index. Index refers to the
         compartment's position given in model.list_compartments().
