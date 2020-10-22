@@ -39,22 +39,28 @@ class Model:
             raise TypeError('CL is NaN, requires int or float')
         if Ka != Ka:  # will return True if NaN
             raise TypeError('Ka is NaN, requires int or float')
-        self.V_c = V_c
-        self.CL = CL
-        self.Ka = Ka
+        if type(V_c) not in [int, float]:
+            raise TypeError('V_c must be int or float')
+        if type(CL) not in [int, float]:
+            raise TypeError('CL must be int or float')
+        if type(Ka) not in [int, float]:
+            raise TypeError('Ka must be int or float')
+        self.__V_c = V_c
+        self.__CL = CL
+        self.__Ka = Ka
         """V_p (list of floats): Initialises epty string to hold V_p
            for all additional compartments, the volume of the each additional
            compartment [mL]."""
-        self.V_p = []
+        self.__V_p = []
         """Q_p (list of floats): Initialises empty string to hold Q_p
             for all additional compartments, the transition rate between
             the central compartment and each peripheral compartment [mL/h]."""
-        self.Q_p = []
+        self.__Q_p = []
 
     def __str__(self):
         """Returns the name of the model as a string.
         """
-        return self.name
+        return self.__Name
 
     def __len__(self) -> int:
         """Returns the number of compartments, including added peripheral compartments.
@@ -69,8 +75,26 @@ class Model:
         """str: name is a property constructed from the model parameters.
         This protects data integrity by tying results to an immutable label.
         """
-        self.__Name = "Model-V_c=" + str(self.V_c) + "-CL=" + str(self.CL) + "-Ka=" + str(self.Ka) + "-" + str(len(V_p)) + "compartments"
+        self.__Name = "Model-V_c=" + str(self.__V_c) + "-CL=" + str(self.__CL) + "-Ka=" + str(self.__Ka) + "-" + str(len(self.__V_p)) + "compartments"
         return self.__Name
+
+    @property
+    def v_c(self) -> float:
+        """float: the value of V_c for this model
+        """
+        return self.__V_c
+
+    @property
+    def cl(self) -> float:
+        """float: the value of CL for this model
+        """
+        return self.__CL
+
+    @property
+    def ka(self) -> float:
+        """float: the value of Ka for this model
+        """
+        return self.__Ka
 
     def add_compartment(self, V_p_new: float, Q_p_new: float):
         """Receives V_p and Q_p for the desired additional compartment and
@@ -86,14 +110,18 @@ class Model:
             raise TypeError('V_p_new is NaN, requires int or float')
         if Q_p_new != Q_p_new:  # will return True if NaN
             raise TypeError('Q_p_new is NaN, requires int or float')
-        self.V_p.append(V_p_new)
-        self.Q_p.append(Q_p_new)
+        if type(Q_p_new) not in [int, float]:
+            raise TypeError('Q_p_new must be int or float')
+        if type(V_p_new) not in [int, float]:
+            raise TypeError('Q_p_new must be int or float')
+        self.__V_p.append(V_p_new)
+        self.__Q_p.append(Q_p_new)
 
     def list_compartments(self):
         """Returns list of lists with a list of [V_p, Q_p] for each compartment.
         """
         list_compartments = []
-        for i in range(len(self.V_p)):
-            list_compartments.append([V_p[i], Q_p[i]])
+        for i in range(len(self.__V_p)):
+            list_compartments.append([self.__V_p[i], self.__Q_p[i]])
         return list_compartments
 
