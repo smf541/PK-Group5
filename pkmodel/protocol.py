@@ -16,10 +16,10 @@ class Protocol:
 
     delivery_mode: string, either 'intravenous' or 'subcutaneous'
 
-    time_span: int, maximum time of the simulation 
+    time_span: int, maximum time of the simulation
 
     """
-    def __init__(self, initial_dose, delivery_mode, time_span):
+    def __init__(self, initial_dose=1, delivery_mode=1, time_span=1):
         self.initial_dose = initial_dose
         self.delivery_mode = delivery_mode
         self.time_span = time_span
@@ -42,7 +42,7 @@ class Protocol:
     # function, which describes the rate of input of the drug over time
 
     def dose(self, time=None, func=None):
-        # we assume the default case is the instantaneous injection, 
+        # we assume the default case is the instantaneous injection,
         # and so time doesn't need to be specified by the user, thus
         # by default we set it to None
         """
@@ -51,7 +51,7 @@ class Protocol:
         Parameters
         ----------
         time: float, time variable for the simulation, set to None by default
-        func: function, function describing the rate of drug input over time, 
+        func: function, function describing the rate of drug input over time,
         set to None by default
 
         Returns
