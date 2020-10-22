@@ -11,9 +11,9 @@
 
 # PK Model
 
-A repository containing our Python library for specifying, solving and visualising a pharmokinetic model. 
+A repository containing our Python library for specifying, solving and visualising a pharmacokinetic model. 
 
-#TODO: Write equations and describe how the pharmokinetic model works (based on project description).
+#TODO: Write equations and describe how the pharmacokinetic model works (based on project description).
 
 ## Using the PK Model library
 
