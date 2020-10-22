@@ -64,6 +64,21 @@ setup(
         'numpy',
         'matplotlib',
         'scipy',
+        'certifi',
+        'cycler',
+        'flake8',
+        'kiwisolver',
+        'matplotlib',
+        'mccabe',
+        'Pillow',
+        'pkmodel',
+        'pycodestyle',
+        'pyflakes',
+        'pyparsing',
+        'python-dateutil',
+        'scipy',
+        'six',
+        'unittest2==0.5.0'
     ],
     extras_require={
         'docs': [
