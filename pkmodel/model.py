@@ -21,6 +21,7 @@ class Model:
         # Verify argument types
         if delivery_mode not in ['intravenous', 'iv', 'IV', 'subcutaneous', 'subq', 'sc', 'SC']:  # noqa: E501
             raise ValueError('Given delivery_mode invalid; try "intravenous" or "subcutaneous"')  # noqa: E501
+            # inline comments to flake8 to ignore line length needed for string checks
         if type(V_c) not in [int, float]:
             raise TypeError('V_c must be int or float')
         if type(CL) not in [int, float]:
@@ -34,7 +35,7 @@ class Model:
         self.__V_c = V_c
         self.__CL = CL
         self.__Ka = Ka
-        """V_p (list of floats): Initialises epty string to hold V_p
+        """V_p (list of floats): Initialises empty string to hold V_p
            for all additional compartments, the volume of the each additional
            compartment [mL]."""
         self.__V_p = []
@@ -62,6 +63,7 @@ class Model:
         This protects data integrity by tying results to an immutable label.
         """
         self.__Name = "Model-" + self.__delivery_mode + "-V_c=" + str(self.__V_c) + "-CL=" + str(self.__CL) + "-Ka=" + str(self.__Ka) + "-" + str(len(self.__V_p)) + "compartments"  # noqa: E501
+        # inline comment to flake8 to ignore line length needed for name string
         return self.__Name
 
     @property
