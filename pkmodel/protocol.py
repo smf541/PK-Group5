@@ -12,7 +12,7 @@ class Protocol:
     time_span: int, maximum time of the simulation
 
     """
-    def __init__(self, initial_dose: float=1.0, time_span: float=1.0):
+    def __init__(self, initial_dose: float = 1.0, time_span: float = 1.0):
         if type(initial_dose) not in [int, float]:
             raise TypeError('initial_dose must be int or float')
         if type(time_span) not in [int, float]:
@@ -25,7 +25,7 @@ class Protocol:
         """str: name is a property constructed from the protocol parameters.
         This protects data integrity by tying results to an immutable label.
         """
-        self.__Name = "Protocol-initial_dose=" + str(self.__Initial_dose) + "-time_span=" + str(self.__Time_span) # noqa: E501
+        self.__Name = "Protocol-initial_dose=" + str(self.__Initial_dose) + "-time_span=" + str(self.__Time_span)  # noqa: E501
         # inline comment to flake8 to ignore line length needed for name string
         return self.__Name
 
@@ -70,10 +70,7 @@ class Protocol:
 
         if func is not None:
             # we need a way to test that func is dependent on time and y
-            try:
-                func(1,2)
-            except:
-                raise TypeError( 'The function must accept y, and t inputs')
+            func(1, 2)  # Test that is accepts two arguments
             return func
         else:
             return lambda y, t: 0

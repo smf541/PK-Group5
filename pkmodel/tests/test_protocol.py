@@ -62,7 +62,7 @@ class ProtocolTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             protocol = pk.Protocol(inital_dose='a')
         with self.assertRaises(TypeError):
-            protocol = pk.Protocol(time_span='b')
+            protocol = pk.Protocol(time_span='b')  # noqa: F841
             # inline comment tells flake8 to ignore unused variable for test
 
     def test_create_dose(self):
@@ -74,7 +74,7 @@ class ProtocolTest(unittest.TestCase):
         self.assertEqual(str(type(dose)), "<class 'function'>")
         dose_func_in = lambda y, t: 0
         dose_func_out = protocol.dose(func=dose_func_in)
-        self.assertEqual(dose_func_in,dose_func_out)
+        self.assertEqual(dose_func_in, dose_func_out)
         with self.assertRaises(TypeError):
             dose_func = lambda z: 0
             protocol.dose(func=dose_func)
