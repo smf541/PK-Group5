@@ -3,8 +3,10 @@
 # model object inputs: V_c=1.0, CL=1.0, Ka=1.0
 
 # [x]implement name method
-# []implement add_compartment( Q_p, V_p) function
-# []implement list() function: list compartments and associated parameters
+# [x]implement add_compartment( Q_p, V_p) function
+# [x]implement list_compartments() function: list compartments and their params
+# [x]implement __str__ method
+# [x] implement __len__ method
 # []implement remove( idx ) function
 # []implement getters and setters v_c() function
 #
@@ -30,6 +32,13 @@ class Model:
             Ka (float): the absorption rate,
                 for example for subcutaneous dosing [/h]
         """
+        # Verify that arguments are numbers
+        if V_c != V_c:  # will return True if NaN
+            raise TypeError('V_c is NaN, requires int or float')
+        if CL != CL:  # will return True if NaN
+            raise TypeError('CL is NaN, requires int or float')
+        if Ka != Ka:  # will return True if NaN
+            raise TypeError('Ka is NaN, requires int or float')
         self.V_c = V_c
         self.CL = CL
         self.Ka = Ka
@@ -42,12 +51,25 @@ class Model:
             the central compartment and each peripheral compartment [mL/h]."""
         self.Q_p = []
 
+    def __str__(self):
+        """Returns the name of the model as a string.
+        """
+        return self.name
+
+    def __len__(self) -> int:
+        """Returns the number of compartments, including added peripheral compartments.
+        Minimum value = 1 for central compartment.
+        """
+        if len(V_p) != len(Q_p):
+            raise Exception('Unequal # of compartment parameters (V_p, Q_p')
+        return len(V_p) + 1
+
     @property
     def name(self) -> str:
         """str: name is a property constructed from the model parameters.
         This protects data integrity by tying results to an immutable label.
         """
-        self.__Name = "Model-V_c=" + self.V_c + "-CL=" + self.CL + "-Ka=" + self.Ka
+        self.__Name = "Model-V_c=" + str(self.V_c) + "-CL=" + str(self.CL) + "-Ka=" + str(self.Ka) + "-" + str(len(V_p)) + "compartments"
         return self.__Name
 
     def add_compartment(self, V_p_new: float, Q_p_new: float):
@@ -66,3 +88,12 @@ class Model:
             raise TypeError('Q_p_new is NaN, requires int or float')
         self.V_p.append(V_p_new)
         self.Q_p.append(Q_p_new)
+
+    def list_compartments(self):
+        """Returns list of lists with a list of [V_p, Q_p] for each compartment.
+        """
+        list_compartments = []
+        for i in range(len(self.V_p)):
+            list_compartments.append([V_p[i], Q_p[i]])
+        return list_compartments
+
