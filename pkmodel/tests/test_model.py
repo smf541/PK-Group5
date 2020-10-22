@@ -13,7 +13,7 @@ class ModelTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             model = pk.Model('string')
         model = pk.Model('sc')
-        self.assertEqual(model.name, 'Model-sc-V_c=1.0-CL=1.0-Ka=1.0-0compartments')  # noqa:E501
+        self.assertEqual(model.name, 'Model-sc-V_c=1.0-CL=1.0-Ka=1.0-0compartments')  # noqa: E501
 
     def test_encapsulation(self):
         """
@@ -72,7 +72,7 @@ class ModelTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             model = pk.Model('iv', CL='b')
         with self.assertRaises(TypeError):
-            model = pk.Model('iv', Ka='c')
+            model = pk.Model('iv', Ka='c')  # noqa: F841
 
     def test_compartments(self):
         """
@@ -85,7 +85,7 @@ class ModelTest(unittest.TestCase):
             model.add_compartment(1.0)
         with self.assertRaises(TypeError):
             model.add_compartment('a', 'b')
-        added = model.add_compartment(V_p_new=1.0, Q_p_new=1.1)
+        added = model.add_compartment(V_p_new=1.0, Q_p_new=1.1)  # noqa: F841
         self.assertEqual(model.list_compartments(), [[1.0, 1.1]])
         model.add_compartment(1.2, 1.3)
         self.assertEqual(model.list_compartments(), [[1.0, 1.1], [1.2, 1.3]])
