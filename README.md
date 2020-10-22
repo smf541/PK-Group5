@@ -13,14 +13,16 @@
 
 A repository containing our Python library for specifying, solving and visualising a pharmokinetic model. 
 
+#TODO: Write equations and describe how the pharmokinetic model works (based on project description).
+
 ## Using the PK Model library
 
-Add usage example once classes and functions are defined.
+#TODO: Add usage example once classes and functions are defined.
 
 [Find our documentation here](https://pk-model.readthedocs.io/en/latest/ "PK Model Documentation")
 
 ## Installing PK Model
-
+#TODO: Make PKModel pip installable
 The latest release of the PK Model library can be installed simply by typing
 
 ```bash
