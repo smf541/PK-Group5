@@ -1,9 +1,9 @@
 # Protocol class
 # With this we want the user to be able to:
 # - Specify the type of delivery of the drug (intravenous/subcutaneous)
-# - Specify the dynamics of the delivery 
+# - Specify the dynamics of the delivery
 # - Call the type as a property
-# - alter the dose function 
+# - alter the dose function
 
 class Protocol:
     """A Pharmokinetic (PK) protocol
@@ -11,8 +11,8 @@ class Protocol:
     Parameters
     ----------
 
-    initial_dose: float, the initial dose of the drug 
-    into the system 
+    initial_dose: float, the initial dose of the drug
+    into the system
 
     delivery_mode: string, either 'intravenous' or 'subcutaneous'
 
@@ -27,10 +27,11 @@ class Protocol:
     @property
     def type(self):
         return self.delivery_mode
-    
-    # Want to be able to access the dose 
-    @property 
-    def starting_dose(self): # naming this 'initial_dose' creates an error on line 25
+
+    # Want to be able to access the dose
+    @property
+    def starting_dose(self):
+        # naming this 'initial_dose' creates an error on line 25
         return self.initial_dose
 
     @property
@@ -55,13 +56,13 @@ class Protocol:
 
         Returns
         -------
-        dose(y, t): function 
+        dose(y, t): function
         """
 
-        if func != None:
+        if func is not None:
             # we need a way to test that func is dependent on time and y
-            return func 
+            return func
         else:
-            return lambda y, t: 0 
-            # default case is the instantaneous addition, in which 
+            return lambda y, t: 0
+            # default case is the instantaneous addition, in which
             # case, there is no further addition, and rate is 0
