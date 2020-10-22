@@ -6,6 +6,10 @@
 
 [![Documentation Status](https://readthedocs.org/projects/pk-model/badge/?version=latest)](https://pk-model.readthedocs.io/en/latest/?badge=latest)
 
+![Run unittests](https://github.com/smf541/PK-Group5/workflows/Run%20unittests/badge.svg)
+
+![Run on multiple os](https://github.com/smf541/PK-Group5/workflows/Run%20on%20multiple%20os/badge.svg)
+
 
 # PK Model
 
