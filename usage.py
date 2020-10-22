@@ -4,12 +4,14 @@
 import pkmodel as pk
 
 
-model1 = pk.model(name, V_c=1.0, CL=1.0, X=1.0, Ka_q0=1.0)
+model1 = pk.model('delivery_mode', V_c=1.0, CL=1.0, Ka=1.0)
 model1.name
-model1.add_compartment(Q_p, V_p)
-model1.list()
-model1.remove(idx)
-model1.v_c()
+model1.add_compartment(Q_p_new=1.0, V_p_new=1.0)
+model1.list_compartments()
+model1.v_c
+model1.cl
+model1.ka
+model1.delivery_mode
 ...
 
 model1_args = {
