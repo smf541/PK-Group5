@@ -141,11 +141,7 @@ class Solution:
     # position of the array defined above. If subcutaneous, we are interested
     # in the variable at the 1th position.
 
-<<<<<<< HEAD
     def visualise(self, layout='overlay', time_res=100):
-=======
-    def visualise(self, inputs=None, layout='overlay', time_res=100):
->>>>>>> 0bac4f55dd42676d443dac809c21d26987d836d3
         """
         Plots the ODE solutions of the model.
         
@@ -163,7 +159,6 @@ class Solution:
         array used for plotting.
         
         """
-<<<<<<< HEAD
         inputs = self.list_compartments()
         if (layout == 'overlay') or (layout == 'side_by_side' and len(inputs) == 1): #make empty figure
             fig = matplotlib.pyplot.figure(figsize=(10.0, 3.0))
@@ -173,10 +168,6 @@ class Solution:
             plot2 = fig.add_subplot(1, 2, 2)
         else:
             raise ValueError('Solution.Visualise() supports overlay or side-by-side plots with max of 2 inputs')
-=======
-        if type(inputs) == None:
-            inputs=self.list 
->>>>>>> 0bac4f55dd42676d443dac809c21d26987d836d3
         for input in inputs:
             i = 0
             model = input[0]  # specify where the model object is 
