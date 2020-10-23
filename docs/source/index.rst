@@ -6,6 +6,8 @@
 Welcome to pkmodel's documentation!
 ===================================
 
+Hello fellow coders <3
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
