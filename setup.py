@@ -39,21 +39,21 @@ setup(
     # Version
     version=get_version(),
 
-    description='An example Python project.',
+    description='A library for specifying, solving, and visualising a pharmacokinetic model',
 
     long_description=get_readme(),
 
-    license='MIT license',
+    license='Apache 2.0',
 
     # author='',
 
     # author_email='',
 
-    maintainer='Martin Robinson',
+    maintainer='Stella Felsinger',
 
-    maintainer_email='martin.robinson@cs.ox.ac.uk',
+    maintainer_email='stella.felsinger@dtc.ox.ac.uk',
 
-    url='https://github.com/SABS-R3/2020-software-engineering-projects-pk',
+    url='https://github.com/smf541/PK-Group5',
 
     # Packages to include
     packages=find_packages(include=('pkmodel', 'pkmodel.*')),
