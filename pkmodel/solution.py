@@ -4,11 +4,6 @@
 # want these to then have ODE solutions that are accessible via plots
 # or as array
 
-import numpy
-import matplotlib.pyplot
-from protocol import Protocol
-from model import Model
-
 class Solution:
     """A Pharmokinetic (PK) model solution
 
@@ -62,9 +57,9 @@ class Solution:
         dose_fn = protocol.dose()
 
         if model.delivery_mode == 'iv':
-            num_variables = len(model.list_comparments())
+            num_variables = len(model.list_compartments())
         elif model.delivery_mode == 'sc':
-            num_variables = len(model.list_comparments()) + 1
+            num_variables = len(model.list_compartments()) + 1
         
         # in the iv case, q0=qc
         # in the sc case, q0=input compartment, and q1=qc
@@ -75,7 +70,7 @@ class Solution:
         ka = model.ka
         # get the parameters for each compartment 
         # this is a list which 
-        compartment_parameters = model.list_comparments()
+        compartment_parameters = model.list_compartments()
         # now extract the ones we need
         q_p = [qp for (v, qp) in compartment_parameters]
         v_p = [vp for (vp, q) in compartment_parameters]
@@ -97,8 +92,6 @@ class Solution:
                 central += transitions
             return [input, central].append(transitions)
 
-
-
     def solution(self, model, protocol, time):
         """
         Calcuates the ODE solution for a specific model and protocol
@@ -113,9 +106,9 @@ class Solution:
         returns: numpy ndarray, containing the numerical solutions to the system
         """
         if model.delivery_mode == 'iv':
-            num_variables = len(model.list_comparments()) + 1
+            num_variables = len(model.list_compartments()) + 1
         elif model.delivery_mode == 'sc':
-            num_variables = len(model.list_comparments()) + 2
+            num_variables = len(model.list_compartments()) + 2
 
         y0 = numpy.zeros((num_variables), dtype=float)
         # set the first element of the initial conditions array y0
@@ -126,8 +119,8 @@ class Solution:
         elif model.delivery_mode == 'sc':
             y0[1] = protocol.initial_dose
         # Now we need to define the model in terms of ODEs
-        system = self.ode_system(model, protocol)
-        numerical_solution = scipy.integrate.odeint(func=system, y0=y0, t=time)
+        # system = self.ode_system(model=model, protocol=protocol)
+        numerical_solution = scipy.integrate.odeint(func=self.ode_system(model=model, protocol=protocol), y0=y0, t=time)
 
 
         # TODO: update this to the new model modes
@@ -138,13 +131,16 @@ class Solution:
         else:
             raise ValueError("Model delivery mode incorrectly defined. Options are: 'intravenous', or 'subcutaneous'.")
 
-
     # IMPORTANT - 
     # If intravenous, we are interested in plotting the variable in the 0th 
     # position of the array defined above. If subcutaneous, we are interested
     # in the variable at the 1th position.
 
+<<<<<<< HEAD
     def visualise(self, layout='overlay', time_res=100):
+=======
+    def visualise(self, inputs=None, layout='overlay', time_res=100):
+>>>>>>> 0bac4f55dd42676d443dac809c21d26987d836d3
         """
         Plots the ODE solutions of the model.
         
@@ -162,6 +158,7 @@ class Solution:
         array used for plotting.
         
         """
+<<<<<<< HEAD
         inputs = self.list_compartments()
         if (layout == 'overlay') or (layout == 'side_by_side' and len(inputs) == 1): #make empty figure
             fig = matplotlib.pyplot.figure(figsize=(10.0, 3.0))
@@ -171,6 +168,10 @@ class Solution:
             plot2 = fig.add_subplot(1, 2, 2)
         else:
             raise ValueError('Solution.Visualise() supports overlay or side-by-side plots with max of 2 inputs')
+=======
+        if type(inputs) == None:
+            inputs=self.list 
+>>>>>>> 0bac4f55dd42676d443dac809c21d26987d836d3
         for input in inputs:
             i = 0
             model = input[0]  # specify where the model object is 
@@ -186,18 +187,3 @@ class Solution:
                     plot2.plot(time, ODE_solution)
             i = i + 1
         matplotlib.pyplot.show()
-
-
-model1 = Model('iv')
-model2 = Model('sc')
-prot1 = Protocol()
-prot2 = Protocol()
-
-sol = Solution()
-sol.add(model1, prot1)
-sol.add(model2, prot2)
-
-time = numpy.linspace(0, 10, 100)
-output1 = sol.solution(model1, prot1, time)
-output2 = sol.solution(model2, prot2, time)
-output3 = sol.solution(model1, prot2, time)

@@ -14,27 +14,37 @@
 
 # PK Model
 
-This repository contains our Python library for specifying, solving and visualising a pharmacokinetic model. 
-
-#TODO: Write equations and describe how the pharmacokinetic model works (based on project description).
+This repository contains a Python library for specifying, solving and visualising a pharmacokinetic model. 
 
 ## About 
 
 PK Model is a useful library for quantitatively describing the absorption, distribution, metabolism, and excretion of a drug through a patient's system. 
 
-The patient's body is modelled as one or more kinetically homogenous compartments into which a drug is initially administered and moves through over time. This easy-to-use package then enables the drug quantity in each comparment to be tracked and visualised at different time points. 
+The patient's body is modelled as one or more kinetically homogenous compartments into which a drug is initially administered and moves through over time. For example:
 
-The model is highly versatile, enabling users to alter parameters such as drug dosage, delivery strategy, the time span over which the drug is delivered, and more. 
+![Image of equation](https://latex.codecogs.com/gif.latex?\frac{\mathrm{d}&space;q_{c}}{\mathrm{d}&space;t}=&space;Dose\left&space;(&space;t&space;\right&space;)-&space;\frac{q^{_{c}}}{V_{c}}CL&space;-&space;Q_{p1}\left&space;(&space;\frac{q_{c}}{V_{c}}&space;-&space;\frac{q_{p1}}{V_{p1}}\right&space;))
 
-PK Model is an up-and-coming python package that strives to make pharmacokinetic modelling intuitive and user-friendly by providing a simple yet powerful model of drug delivery. 
+Where:
+
+Dose(t) is the drug dose function
+Vc [mL] is the volume of the central compartment
+Vp1 [mL] is the volume of the first peripheral compartment
+Vp1 [mL] is the volume of the peripheral compartment 1
+CL [mL/h] is the clearance/elimination rate from the central compartment
+Qp1 [mL/h] is the transition rate between central compartment and peripheral compartment 1
+
+This easy-to-use package enables the drug quantity in each comparment to be tracked and visualised at different time points. The model is highly versatile, enabling users to alter parameters such as drug dosage, delivery strategy, the time span over which the drug is delivered, and more.
+
+PK Model is an up-and-coming Python package that strives to make pharmacokinetic modelling intuitive and user-friendly by providing a simple yet powerful model of drug delivery. 
 
 
 ## Using the PK Model library
 
+
 #TODO: Add usage example once classes and functions are defined.
 
+
 ## Installing PK Model
-#TODO: Make PKModel pip installable
 
 PK Model is compatible with Python versions 3.6+. 
 
@@ -50,9 +60,15 @@ If you wish to uninstall the library, you can do so using the following command:
 pip uninstall PKModel
 ```
 
-## Package Documentation 
+## Package Documentation and Requirements
 
-Our API Reference and User Guide is available on [Read the Docs](https://pk-model.readthedocs.io/en/latest/ "PK Model Documentation")
+Our API Reference and User Guide is available on [Read the Docs](https://pk-model.readthedocs.io/en/latest/ "PK Model Documentation").
+
+The dependencies for this package can be found in the list of [Requirements](https://github.com/smf541/PK-Group5/blob/master/requirements.txt). Note: all dependencies are automatically installed when the PK Model package is installed. 
+
+## Contributing 
+
+For instructions on how to contribute to PK model, see the [Contributor README](https://github.com/smf541/PK-Group5/blob/master/docs/contributor_README.md).
 
 
 
