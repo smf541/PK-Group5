@@ -53,9 +53,9 @@ class Model:
         """Returns the number of compartments, including added peripheral compartments.
         Minimum value = 1 for central compartment.
         """
-        if len(V_p) != len(Q_p):
+        if len(self.__V_p) != len(self.__Q_p):
             raise Exception('Unequal # of compartment parameters (V_p, Q_p')
-        return len(V_p) + 1
+        return len(self.__V_p) + 1
 
     @property
     def name(self) -> str:
@@ -83,6 +83,12 @@ class Model:
         """float: the value of Ka for this model
         """
         return self.__Ka
+
+    @property
+    def delivery_mode(self) -> str:
+        """str: returns either 'iv' or 'sc' for the delivery_mode
+        """
+        return self.__delivery_mode
 
     def add_compartment(self, V_p_new: float, Q_p_new: float):
         """Receives V_p and Q_p for the desired additional compartment and
