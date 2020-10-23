@@ -63,6 +63,7 @@ class ModelTest(unittest.TestCase):
         self.assertEqual(model.v_c, 1.1)
         self.assertEqual(model.cl, 1.2)
         self.assertEqual(model.ka, 1.4)
+        self.assertEqual(model.delivery_mode, 'iv')
 
     def test_create_initvalues_typeerror(self):
         """
