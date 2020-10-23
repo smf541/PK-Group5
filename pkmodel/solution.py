@@ -1,3 +1,4 @@
+import pkmodel as pk
 #
 # Solution class
 # Want users to be able to add multiple pairs of models and protocols
@@ -8,39 +9,63 @@ import numpy
 import scipy.integrate
 
 class Solution:
-    """A Pharmokinetic (PK) model solution
-
-    Parameters
-    ----------
-
-    value: numeric, optional
-        an example paramter
-
+    """The Solution class structures access to the SciPy ODE solver.
+    It also contains methods to visualise the solutions for the central compartment,
+    in side-by-side or overlay views. The user can add or remove the models and protocols
+    to be solved. 
     """
     def __init__(self):
+        """Initialises a Solution object, which holds a list of model objects
+        and a list of protocol objects. These initialise as empty lists.
+        Further documentation on the Model and Protocol classes can be found under
+        their methods.
+        Args:
+            None
+        """
         self.models = []
         self.protocols = []
 
-    def add(self, model, protocol):  # perhaps allow this to pass a list?
+    def add(self, model, protocol):
+        """Adds a pair of model and protocol objects to the solution object.
+        The attributes and methods of the Model and Protocol classes can be 
+        found in their documentation.
+
+        Args:
+            model (pkmodel Model): the model object containing the parameters for
+                the ODE solver
+            protocol (pkmodel Protocol): the protocol object containing the parameters
+                of the dose and time span for the ODE solver
+        """
+        # Verify the type of the model and protocol arguments
+        if type(model) != pk.Model:
+            raise TypeError('The model must be a pkmodel Model')
+        if type(protocol) != pk.Protocol:
+            raise TypeError('The protocol must be a pkmodel Protocol')
+        # Add the model and protocol to their lists
         self.models.append(model)
         self.protocols.append(protocol)
 
     @property
-    def list(self):
-        """
-        Lists the (model, protocol) combinations in the solution object
+    def list_compartments(self):
+        """Returns a list of tuples of (model, protocol) combinations
+        in the solution object.
+
+        Args:
+           None
         """
         out = []
-        # we can assume protocols same length as methods, as user only adds
-        # them as a pair 
+        # We assume protocols same length as methods, because the user only adds
+        # them as a pair.
         for i in range(0, len(self.models)):  
             out.append((self.models[i], self.protocols[i]))
         return out 
 
-    def remove(self, model, protocol):
-        """Removes a model and protocol pair from the solution"""
-        self.models.remove(model)
-        self.protocols.remove(protocol)
+    def remove(self, index):
+        """Removes a model and protocol pair from the models and
+        protocols lists in the solution class.
+        """
+        self.models.remove(index)
+        self.protocols.remove(index)
 
     def ode_system(self, q, t, model, protocol):
         """
@@ -150,7 +175,7 @@ class Solution:
     # position of the array defined above. If subcutaneous, we are interested
     # in the variable at the 1th position.
 
-    def visualise(self, inputs=None, layout='overlay', time_res=100):
+    def visualise(self, layout='overlay', time_res=100):
         """
         Plots the ODE solutions of the model.
         
@@ -168,12 +193,27 @@ class Solution:
         array used for plotting.
         
         """
-        if type(inputs) == None:
-            inputs=self.list 
+        inputs = self.list_compartments()
+        if (layout == 'overlay') or (layout == 'side_by_side' and len(inputs) == 1): #make empty figure
+            fig = matplotlib.pyplot.figure(figsize=(10.0, 3.0))
+        if layout == 'side_by_side' and len(inputs) == 2:
+            fig = matplotlib.pyplot.figure(figsize=(10.0, 3.0))
+            plot1 = fig.add_subplot(1, 2, 1)
+            plot2 = fig.add_subplot(1, 2, 2)
+        else:
+            raise ValueError('Solution.Visualise() supports overlay or side-by-side plots with max of 2 inputs')
         for input in inputs:
+            i = 0
             model = input[0]  # specify where the model object is 
             protocol = input[1]  # specify where the protocol object is 
             time = numpy.linspace(0, protocol.time_span, time_res) 
             ODE_solution = self.solution(model, protocol, time_res) # make this a function of time array
-            matplotlib.pyplot.plot(time, ODE_solution)
+            if (layout == 'overlay') or (layout == 'side_by_side' and len(inputs == 1)):
+                fig.plot(time, ODE_solution)
+            if layout == 'side_by_side' and len(inputs) == 2:
+                if i == 0:
+                    plot1.plot(time, ODE_solution)
+                if i == 1:
+                    plot2.plot(time, ODE_solution)
+            i = i + 1
         matplotlib.pyplot.show()

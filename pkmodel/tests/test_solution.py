@@ -10,6 +10,64 @@ class SolutionTest(unittest.TestCase):
         """
         Tests Solution creation.
         """
-        model = pk.Solution()
-        self.assertEqual(model.value, 44)
+        solution = pk.Solution()
+        self.assertEqual(solution.list_compartments, [])
 
+    def test_add(self):
+        """
+        Tests Solution addition of Models and Protocols.
+        """
+        solution = pk.Solution()
+        model = pk.Model('iv')
+        protocol = pk.Protocol()
+        with self.assertRaises(TypeError):
+            solution.add()
+        with self.assertRaises(TypeError):
+            solution.add('model')
+        with self.assertRaises(TypeError):
+            solution.add('model', 'protocol')
+        with self.assertRaises(TypeError):
+            solution.add(model, 'protocol')
+        with self.assertRaises(TypeError):
+            solution.add('model', protocol)
+        solution.add(model, protocol)
+        self.assertEqual(solution.list_compartments, [(model, protocol)])
+        model2 = pk.Model('sc')
+        protocol2 = pk.Protocol(initial_dose=1.1, time_span=1.2)
+        solution.add(model2, protocol2)
+        self.assertEqual(solution.list_compartments, [(model, protocol), (model2, protocol2)])
+
+    def test_remove(self):
+        """
+        Tests Solution addition of Models and Protocols.
+        """
+        solution = pk.Solution()
+        model = pk.Model('iv')
+        protocol = pk.Protocol()
+        model2 = pk.Model('sc')
+        protocol2 = pk.Protocol(initial_dose=1.1, time_span=1.2)
+        with self.assertRaises(TypeError):
+            solution.remove()
+        with self.assertRaises(TypeError):
+            solution.remove('model')
+        with self.assertRaises(TypeError):
+            solution.remove('model', 'protocol')
+        with self.assertRaises(TypeError):
+            solution.remove(model, 'protocol')
+        with self.assertRaises(TypeError):
+            solution.remove('model', protocol)
+        with self.assertRaises(ValueError):
+            solution.remove(model, protocol)
+        solution.add(model, protocol)
+        self.assertEqual(solution.list_compartments, [(model, protocol)])
+        solution.remove(model, protocol)
+        self.assertEqual(solution.list_compartments, [])
+        solution.add(model, protocol)
+        solution.add(model2, protocol2)
+        self.assertEqual(solution.list_compartments, [(model, protocol), (model2, protocol2)])
+        solution.remove(model, protocol)
+        self.assertEqual(solution.list_compartments, [(model2, protocol2)])
+        solution.remove(model2, protocol2)
+        self.assertEqual(solution.list_compartments, [])
+        with self.assertRaises(ValueError):
+            solution.remove(model2, protocol2)
