@@ -4,6 +4,9 @@
 # want these to then have ODE solutions that are accessible via plots
 # or as array
 
+import numpy
+import scipy.integrate
+
 class Solution:
     """A Pharmokinetic (PK) model solution
 
@@ -41,18 +44,18 @@ class Solution:
 
     def ode_system(self, q, t, model, protocol):
         """
-        Takes as input an array-like list of variables q, a float time t, 
+        Takes as input an array-like list of variables q, a float time t,
         a Model object and a Protocol object, 
-        then returns the system of ODEs for this pair 
+        then returns the system of ODEs for this pair
 
         Parameters:
         ----------
         q: array-like object of variables q
-        t: float, representing time 
+        t: float, representing time
         model: Model object
         protocol: Protocol object
 
-        returns: 1-D list of functions of ordinary differential equations 
+        returns: 1-D list of functions of ordinary differential equations
         """
         dose_fn = protocol.dose()
 
@@ -66,27 +69,28 @@ class Solution:
 
         # get the global model parameters
         v_c = model.v_c
-        cl = model.cl 
+        cl = model.cl
         ka = model.ka
-        # get the parameters for each compartment 
-        # this is a list which 
+        # get the parameters for each compartment
+        # this is a list which
         compartment_parameters = model.list_compartments()
         # now extract the ones we need
         q_p = [qp for (v, qp) in compartment_parameters]
         v_p = [vp for (vp, q) in compartment_parameters]
 
         # create a list of transitions
+
         transitions = [q_p[i] * ((q[0] / v_c) - (q[i] / v_p[i])) for i in range(1, num_variables)]
 
         if model.delivery_mode == 'iv':
-            central = dose_fn(t) - (q[0] / v_c) * cl  # need to pass this dose_fn t as we need it in float type
+            central = dose_fn(q, t) - (q[0] / v_c) * cl  # need to pass this dose_fn q,t as we need it in float type
             # now update central to include transitions
             for transition in transitions:
                 central += transition
             return [central].append(transitions)
 
         elif model.delivery_mode == 'sc':
-            input = dose_fn(t) - ka * q[0]
+            input = dose_fn(q, t) - ka * q[0]
             central = ka * q[0] - (q[1] / v_c) * cl
             for transition in transitions:
                 central += transitions
@@ -101,7 +105,7 @@ class Solution:
 
         model: Model object
         protocol: Protocol object
-        time: numpy 1-D array, gives the time array for passing to odeint
+        time: tuple (t0, tmax), t0 start of the integration, and tmax end of it 
 
         returns: numpy ndarray, containing the numerical solutions to the system
         """
@@ -119,19 +123,29 @@ class Solution:
         elif model.delivery_mode == 'sc':
             y0[1] = protocol.initial_dose
         # Now we need to define the model in terms of ODEs
-        # system = self.ode_system(model=model, protocol=protocol)
-        numerical_solution = scipy.integrate.odeint(func=self.ode_system(model=model, protocol=protocol), y0=y0, t=time)
+        system = lambda t, q: self.ode_system(q, t, model=model,
+            protocol=protocol)
+        
+        time_span = [time[0], time[-1]]
+        numerical_solution = scipy.integrate.solve_ivp(fun=system, y0=y0,
+            t_span=time_span, t_eval=time)
+        print("Numerical soln is")
+        print(numerical_solution)
 
+        # need to unpack the t and y arrays from numerical_solution
+
+        time = numerical_solution.t
+        numerical_solution = numerical_solution.y # cut down the output to just the integrated solution
 
         # TODO: update this to the new model modes
         if model.delivery_mode == 'iv':
-            return numerical_solution[0]
+            return numerical_solution[0], time
         elif model.delivery_mode == 'sc':
-            return numerical_solution[1]
+            return numerical_solution[1], time
         else:
             raise ValueError("Model delivery mode incorrectly defined. Options are: 'intravenous', or 'subcutaneous'.")
 
-    # IMPORTANT - 
+    # IMPORTANT -
     # If intravenous, we are interested in plotting the variable in the 0th 
     # position of the array defined above. If subcutaneous, we are interested
     # in the variable at the 1th position.
