@@ -53,7 +53,7 @@ class Model:
         """Returns the number of compartments, including added peripheral compartments.
         Minimum value = 1 for central compartment.
         """
-        if len(V_p) != len(Q_p):
+        if len(self.__V_p) != len(self.__Q_p):
             raise Exception('Unequal # of compartment parameters (V_p, Q_p')
         return len(V_p) + 1
 
