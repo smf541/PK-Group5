@@ -6,8 +6,10 @@
 
 import numpy
 import matplotlib.pyplot
+import scipy
 from protocol import Protocol
 from model import Model
+
 
 class Solution:
     """A Pharmokinetic (PK) model solution
@@ -62,9 +64,9 @@ class Solution:
         dose_fn = protocol.dose()
 
         if model.delivery_mode == 'iv':
-            num_variables = len(model.list_comparments())
+            num_variables = len(model.list_compartments())
         elif model.delivery_mode == 'sc':
-            num_variables = len(model.list_comparments()) + 1
+            num_variables = len(model.list_compartments()) + 1
         
         # in the iv case, q0=qc
         # in the sc case, q0=input compartment, and q1=qc
@@ -75,7 +77,7 @@ class Solution:
         ka = model.ka
         # get the parameters for each compartment 
         # this is a list which 
-        compartment_parameters = model.list_comparments()
+        compartment_parameters = model.list_compartments()
         # now extract the ones we need
         q_p = [qp for (v, qp) in compartment_parameters]
         v_p = [vp for (vp, q) in compartment_parameters]
@@ -97,8 +99,6 @@ class Solution:
                 central += transitions
             return [input, central].append(transitions)
 
-
-
     def solution(self, model, protocol, time):
         """
         Calcuates the ODE solution for a specific model and protocol
@@ -113,9 +113,9 @@ class Solution:
         returns: numpy ndarray, containing the numerical solutions to the system
         """
         if model.delivery_mode == 'iv':
-            num_variables = len(model.list_comparments()) + 1
+            num_variables = len(model.list_compartments()) + 1
         elif model.delivery_mode == 'sc':
-            num_variables = len(model.list_comparments()) + 2
+            num_variables = len(model.list_compartments()) + 2
 
         y0 = numpy.zeros((num_variables), dtype=float)
         # set the first element of the initial conditions array y0
@@ -126,8 +126,8 @@ class Solution:
         elif model.delivery_mode == 'sc':
             y0[1] = protocol.initial_dose
         # Now we need to define the model in terms of ODEs
-        system = self.ode_system(model, protocol)
-        numerical_solution = scipy.integrate.odeint(func=system, y0=y0, t=time)
+        # system = self.ode_system(model=model, protocol=protocol)
+        numerical_solution = scipy.integrate.odeint(func=self.ode_system(model=model, protocol=protocol), y0=y0, t=time)
 
 
         # TODO: update this to the new model modes
@@ -138,13 +138,12 @@ class Solution:
         else:
             raise ValueError("Model delivery mode incorrectly defined. Options are: 'intravenous', or 'subcutaneous'.")
 
-
     # IMPORTANT - 
     # If intravenous, we are interested in plotting the variable in the 0th 
     # position of the array defined above. If subcutaneous, we are interested
     # in the variable at the 1th position.
 
-    def visualise(self, inputs=self.list, layout='overlay', time_res=100):
+    def visualise(self, inputs, layout='overlay', time_res=100):
         """
         Plots the ODE solutions of the model.
         
