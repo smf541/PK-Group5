@@ -4,18 +4,6 @@
 # want these to then have ODE solutions that are accessible via plots
 # or as array
 
-import numpy
-import matplotlib.pyplot
-<<<<<<< HEAD
-import scipy
-from protocol import Protocol
-from model import Model
-=======
-from pkmodel import Protocol
-from pkmodel import Model
->>>>>>> 8b5954568114b67c6192458224d8ae0bd4a3aec8
-
-
 class Solution:
     """A Pharmokinetic (PK) model solution
 
@@ -148,11 +136,7 @@ class Solution:
     # position of the array defined above. If subcutaneous, we are interested
     # in the variable at the 1th position.
 
-<<<<<<< HEAD
-    def visualise(self, inputs, layout='overlay', time_res=100):
-=======
     def visualise(self, inputs=None, layout='overlay', time_res=100):
->>>>>>> 8b5954568114b67c6192458224d8ae0bd4a3aec8
         """
         Plots the ODE solutions of the model.
         
@@ -179,18 +163,3 @@ class Solution:
             ODE_solution = self.solution(model, protocol, time_res) # make this a function of time array
             matplotlib.pyplot.plot(time, ODE_solution)
         matplotlib.pyplot.show()
-
-
-model1 = Model('iv')
-model2 = Model('sc')
-prot1 = Protocol()
-prot2 = Protocol()
-
-sol = Solution()
-sol.add(model1, prot1)
-sol.add(model2, prot2)
-
-time = numpy.linspace(0, 10, 100)
-output1 = sol.solution(model1, prot1, time)
-output2 = sol.solution(model2, prot2, time)
-output3 = sol.solution(model1, prot2, time)
