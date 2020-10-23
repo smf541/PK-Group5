@@ -65,3 +65,22 @@ class SolutionTest(unittest.TestCase):
         self.assertEqual(solution.list_compartments, [])
         with self.assertRaises(IndexError):
             solution.remove(0)
+
+    def test_solution_method(self):
+        """
+        Test the solution method in the Solution class.
+        """
+        solution1 = pk.Solution()
+        solution2 = pk.Solution()
+        model1 = pk.Model('sc')
+        protocol1 = pk.Protocol()
+        model2 = pk.Model('iv')
+        protocol2 = pk.Protocol(initial_dose=2, time_span=1.3)
+        solution1.add(model1, protocol1)
+        solution2.add(model2, solution2)
+        with self.assertRaises(TypeError):
+            solution1.solution()
+        with self.assertRaises(TypeError):
+            solution2.solution('a')
+        # Test length of zeros
+        # Test length numerical solution
