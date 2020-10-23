@@ -58,9 +58,9 @@ Adding the `--dev` flag will include development dependencies, and omitting `--w
 
 ### Linting
 
-Additions to the code should adhere to the [PEP8 Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/#introduction, "PEP8 Style Guide"). GitHub automatically tests your style with the Flake8 linter everytime you submit a pull request. We reccommend linting your code while you write it as this can save time and commits later on! To enable linting with Flake8 in Visual Studio Code, open the Command Palette (<kbd>&#8679;</kbd><kbd>&#8984;</kbd><kbd>P</kbd> or <kbd>CTRL</kbd><kbd>SHIFT</kbd><kbd>P</kbd>) and click on the **Python: Select Linter** command. You can then select Flake8 from the dropdown list. 
+Additions to the code should adhere to the [PEP8 Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/#introduction, "PEP8 Style Guide"). GitHub automatically tests your style with the Flake8 linter everytime you submit a pull request. We recommend linting your code while you write it as this can save time and commits later on! To enable linting with Flake8 in Visual Studio Code, open the Command Palette (<kbd>&#8679;</kbd><kbd>&#8984;</kbd><kbd>P</kbd> or <kbd>CTRL</kbd><kbd>SHIFT</kbd><kbd>P</kbd>) and click on the **Python: Select Linter** command. You can then select Flake8 from the dropdown list. 
 
-Unless there is a good reason for ignoring the linter, your pull request will not be granted until it passes these checks. The error messages are usually quite informative, but if you are not able to fix the issue you can contact a member of the core delelopment team who will be happy to help.⇧
+Unless there is a good reason for ignoring the linter, your pull request will not be granted until it passes these checks. The error messages are usually quite informative, but if you are not able to fix the issue you can contact a member of the core development team who will be happy to help.
 
 ### Naming conventions
 
