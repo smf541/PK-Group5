@@ -57,27 +57,32 @@ class Solution:
             out.append((self.models[i], self.protocols[i]))
         return out 
 
-    def remove(self, index):
+    def remove(self, index: int):
         """Removes a model and protocol pair from the models and
-        protocols lists in the solution class.
+        protocols lists in the solution class. Choose which pair to
+        remove by finding its index in Solution.list_compartments().
+        Pair should have the same index as they can only be added together.
+
+        Args:
+            index (int): the index of the model and protocol pair to be removed.
+                As given in Solution.list_compartments().
         """
         self.models.remove(index)
         self.protocols.remove(index)
 
     def ode_system(self, q, t, model, protocol):
-        """
-        Takes as input an array-like list of variables q, a float time t, 
-        a Model object and a Protocol object, 
-        then returns the system of ODEs for this pair 
+        """Takes as input an array-like list of variables q, a float time t, 
+        a Model object and a Protocol object, then returns the system of ODEs 
+        for this pair.
 
-        Parameters:
-        ----------
-        q: array-like object of variables q
-        t: float, representing time 
-        model: Model object
-        protocol: Protocol object
+        Args:
+            q (array-like object of variables q)
+            t (float): time [hours]
+            model (Model object)
+            protocol (Protocol object)
 
-        returns: 1-D list of functions of ordinary differential equations 
+        Returns: 
+            1-D list of functions of ordinary differential equations 
         """
         dose_fn = protocol.dose()
 
@@ -118,17 +123,16 @@ class Solution:
             return [input, central].append(transitions)
 
     def solution(self, model, protocol, time):
-        """
-        Calcuates the ODE solution for a specific model and protocol
+        """Calcuates the ODE solution for a specific model and protocol
+        using SciPy .odeint(). 
 
-        Parameters:
-        ----------
+        Args:
+            model (Model object)
+            protocol (Protocol object)
+            time (numpy 1-D array): gives the time array for passing to odeint
 
-        model: Model object
-        protocol: Protocol object
-        time: numpy 1-D array, gives the time array for passing to odeint
-
-        returns: numpy ndarray, containing the numerical solutions to the system
+        Returns: 
+            numpy (ndarray): the numerical solutions to the system
         """
         if model.delivery_mode == 'iv':
             num_variables = len(model.list_compartments()) + 1
@@ -136,7 +140,7 @@ class Solution:
             num_variables = len(model.list_compartments()) + 2
 
         y0 = numpy.zeros((num_variables), dtype=float)
-        # set the first element of the initial conditions array y0
+        # Set the first element of the initial conditions array y0
         # to be the initial value of the 0th compartment, which is the 
         # compartment in which we get drug delivery (central for intravenous)
         if model.delivery_mode == 'iv':
@@ -150,36 +154,29 @@ class Solution:
 
         # TODO: update this to the new model modes
         if model.delivery_mode == 'iv':
-            return numerical_solution[0]
+            return numerical_solution[0]  # the numerical solution for intravenous dosing
         elif model.delivery_mode == 'sc':
-            return numerical_solution[1]
+            return numerical_solution[1]  # the numerical solution for subcutaneous dosing
         else:
             raise ValueError("Model delivery mode incorrectly defined. Options are: 'intravenous', or 'subcutaneous'.")
 
-    # IMPORTANT - 
-    # If intravenous, we are interested in plotting the variable in the 0th 
-    # position of the array defined above. If subcutaneous, we are interested
-    # in the variable at the 1th position.
-
     def visualise(self, layout='overlay', time_res=100):
-        """
-        Plots the ODE solutions of the model.
-        
-        Parameters:
-        ----------
-        
-        inputs: list of tuples, the (model, protocol) pairs in the solution
-        that you wish to visualise. Defaults to all such pairs in the solution
+        """Plots the ODE solutions of the model using Matplotlib.
+        Layout can be chosen to be overlay or side-by-side.
+        Currently supports up to two side-by-side plots.
+        Time resolution defaults to 100 time steps but can be changed
+        by the user as desired.
 
-        layout: string, either 'overlay' or 'side_by_side'. Specifies if the 
-        solutions are show overlain on one plot, or as independent plots
-        side by side. Defaults to 'overlay'. 
-
-        time_res: int, the number of elements in the time and ODE solution
-        array used for plotting.
-        
+        Args:
+            layout (str): either 'overlay' or 'side_by_side,' defaults
+               to 'overlay.' Specifies if the solutions are shown overlaying
+               each other on one plot or as independent subplots side by side.
+            time_res (int): the time resolution, specified as the number of 
+                elements in the time and ODE solution array used for plotting.
         """
+        # Generate tuples with (model, protocol) pairs as a list of tuples
         inputs = self.list_compartments()
+        # Generate figures to be populated with 'overlay' or 'side-by-side' plots
         if (layout == 'overlay') or (layout == 'side_by_side' and len(inputs) == 1): #make empty figure
             fig = matplotlib.pyplot.figure(figsize=(10.0, 3.0))
         if layout == 'side_by_side' and len(inputs) == 2:
@@ -188,12 +185,13 @@ class Solution:
             plot2 = fig.add_subplot(1, 2, 2)
         else:
             raise ValueError('Solution.Visualise() supports overlay or side-by-side plots with max of 2 inputs')
+        # Loop over (model, protocol) objects to solve and then plot each
         for input in inputs:
             i = 0
-            model = input[0]  # specify where the model object is 
-            protocol = input[1]  # specify where the protocol object is 
-            time = numpy.linspace(0, protocol.time_span, time_res) 
-            ODE_solution = self.solution(model, protocol, time_res) # make this a function of time array
+            model = input[0]  # the model object is the first in the tuple
+            protocol = input[1]  # the protocol object is the second in the tuple
+            time = numpy.linspace(0, protocol.time_span, time_res) # generate time array
+            ODE_solution = self.solution(model, protocol, time_res) # a function of the time array
             if (layout == 'overlay') or (layout == 'side_by_side' and len(inputs == 1)):
                 fig.plot(time, ODE_solution)
             if layout == 'side_by_side' and len(inputs) == 2:
