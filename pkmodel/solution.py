@@ -1,3 +1,4 @@
+import pkmodel as pk
 #
 # Solution class
 # Want users to be able to add multiple pairs of models and protocols
@@ -19,6 +20,10 @@ class Solution:
         self.protocols = []
 
     def add(self, model, protocol):  # perhaps allow this to pass a list?
+        if type(model) != pk.Model:
+            raise TypeError('The model must be a pkmodel Model')
+        if type(protocol) != pk.Protocol:
+            raise TypeError('The protocol must be a pkmodel Protocol')
         self.models.append(model)
         self.protocols.append(protocol)
 
