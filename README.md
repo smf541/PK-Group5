@@ -12,41 +12,47 @@
 
 ![Run on multiple os](https://github.com/smf541/PK-Group5/workflows/Run%20on%20multiple%20os/badge.svg)
 
-
 # PK Model
 
 This repository contains our Python library for specifying, solving and visualising a pharmacokinetic model. 
 
 #TODO: Write equations and describe how the pharmacokinetic model works (based on project description).
 
+## About 
+
+PK Model is a useful library for quantitatively describing the absorption, distribution, metabolism, and excretion of a drug through a patient's system. 
+
+The patient's body is modelled as one or more kinetically homogenous compartments into which a drug is initially administered and moves through over time. This easy-to-use package then enables the drug quantity in each comparment to be tracked and visualised at different time points. 
+
+The model is highly versatile, enabling users to alter parameters such as drug dosage, delivery strategy, the time span over which the drug is delivered, and more. 
+
+PK Model is an up-and-coming python package that strives to make pharmacokinetic modelling intuitive and user-friendly by providing a simple yet powerful model of drug delivery. 
+
+
 ## Using the PK Model library
 
 #TODO: Add usage example once classes and functions are defined.
-
-[Find our documentation here](https://pk-model.readthedocs.io/en/latest/ "PK Model Documentation")
 
 ## Installing PK Model
 #TODO: Make PKModel pip installable
 
 PK Model is compatible with Python versions 3.6+. 
 
-To install the latest release of the PK Model library, first download the necessary packages from the requirements.txt file in this repository:
+To install the latest release of the PK Model library, simply type the following command into the console:
 
 ```bash
-pip install -r requirements.txt
+python -m pip install --extra-index-url https://test.pypi.org/simple/ pkmodel
 ```
-The latest release of the PK Model library can then be installed simply by typing
 
-```bash
-pip install -i https://test.pypi.org/simple/ pkmodel
-```
-in a console. 
-
-If you wish to uninstall the library, you can do so by typing in the console:
+If you wish to uninstall the library, you can do so using the following command:
 
 ```bash
 pip uninstall PKModel
 ```
+
+## Package Documentation 
+
+Our API Reference and User Guide is available on [Read the Docs](https://pk-model.readthedocs.io/en/latest/ "PK Model Documentation")
 
 
 
