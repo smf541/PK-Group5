@@ -71,14 +71,12 @@ setup(
         'matplotlib',
         'mccabe',
         'Pillow',
-        'pkmodel',
         'pycodestyle',
         'pyflakes',
         'pyparsing',
         'python-dateutil',
         'scipy',
-        'six',
-        'unittest2==0.5.0'
+        'six'
     ],
     extras_require={
         'docs': [
