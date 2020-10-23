@@ -26,14 +26,14 @@ The patient's body is modelled as one or more kinetically homogenous compartment
 
 Where:
 
-Dose(t) is the drug dose function
-Vc [mL] is the volume of the central compartment
-Vp1 [mL] is the volume of the first peripheral compartment
-Vp1 [mL] is the volume of the peripheral compartment 1
-CL [mL/h] is the clearance/elimination rate from the central compartment
-Qp1 [mL/h] is the transition rate between central compartment and peripheral compartment 1
+    - Dose(t) is drug dose function
+    - Vc [mL] is the volume of the central compartment
+    - Vp1 [mL] is the volume of the first peripheral compartment
+    - Vp1 [mL] is the volume of the peripheral compartment 
+    - CL [mL/h] is the clearance/elimination rate from the central      compartment
+    - Qp1 [mL/h] is the transition rate between central compartment and peripheral compartment 
 
-This easy-to-use package enables the drug quantity in each comparment to be tracked and visualised at different time points. The model is highly versatile, enabling users to alter parameters such as drug dosage, delivery strategy, the time span over which the drug is delivered, and more.
+This easy-to-use package enables the drug quantity in each comparment to be tracked and visualised at different time points. The model is highly versatile, enabling users to alter parameters such as the number of peripheral compartments, the type of dosing, the dosing protocol, and more.
 
 PK Model is an up-and-coming Python package that strives to make pharmacokinetic modelling intuitive and user-friendly by providing a simple yet powerful model of drug delivery. 
 
@@ -44,7 +44,7 @@ PK Model is an up-and-coming Python package that strives to make pharmacokinetic
 #TODO: Add usage example once classes and functions are defined.
 
 
-## Installing PK Model
+## Installing PK Model and Version Specification
 
 PK Model is compatible with Python versions 3.6+. 
 
@@ -60,7 +60,7 @@ If you wish to uninstall the library, you can do so using the following command:
 pip uninstall PKModel
 ```
 
-## Package Documentation and Requirements
+## Package Documentation and Requireements
 
 Our API Reference and User Guide is available on [Read the Docs](https://pk-model.readthedocs.io/en/latest/ "PK Model Documentation").
 
