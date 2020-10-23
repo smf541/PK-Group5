@@ -41,6 +41,10 @@ class Solution:
 
     def remove(self, model, protocol):
         """Removes a model and protocol pair from the solution"""
+        if type(model) != pk.Model:
+            raise TypeError('The model must be a pkmodel Model')
+        if type(protocol) != pk.Protocol:
+            raise TypeError('The protocol must be a pkmodel Protocol')
         self.models.remove(model)
         self.protocols.remove(protocol)
 
