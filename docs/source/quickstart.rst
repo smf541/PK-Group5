@@ -1,3 +1,3 @@
 Quickstart
 =============
-I would be handy to have a quickstart guide!
+It would be handy to have a quickstart guide!
