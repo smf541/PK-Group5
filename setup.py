@@ -66,7 +66,6 @@ setup(
         'scipy',
         'certifi',
         'cycler',
-        'flake8',
         'kiwisolver',
         'matplotlib',
         'mccabe',
