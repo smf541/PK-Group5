@@ -47,11 +47,7 @@ class Model:
     def __str__(self):
         """Returns the name of the model as a string.
         """
-<<<<<<< HEAD
-        return self.__Name
-=======
         return self.name
->>>>>>> master
 
     def __len__(self) -> int:
         """Returns the number of compartments, including added peripheral compartments.

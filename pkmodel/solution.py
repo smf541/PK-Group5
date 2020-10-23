@@ -61,7 +61,7 @@ class Solution:
         """
         
 
-    def ode_system(self, model, protocol, t=0):
+    def ode_system(self, y, t, model, protocol):
         """
         Takes as input a Model object and a Protocol object, 
         then returns the system of ODEs for this pair 
@@ -72,14 +72,47 @@ class Solution:
         model: Model object
         protocol: Protocol object
 
-        returns: 1-D list of ordinary differential equations 
+        returns: 1-D list of functions of ordinary differential equations 
         """
         dose_fn = protocol.dose()
         # From what I remember of how odeint works, it's enough to pass it
         # a list of expressions, which calculate a value
         # So, try and express the system as such:
 
-        # First unpack the variables, which should be a list of 
+        # First unpack the variables, which should be an array
+        # Create an array of variables 
+
+
+        # define the rate in the central compartment, depending on the model type
+        # the the number of qn variables in the model 
+
+        if model.delivery_mode == 'iv':
+            num_variables = len(model.list_comparments())
+        elif model.delivery_mode == 'sc':
+            num_variables = len(model.list_comparments()) + 1
+        
+        # in the iv case, q0=qc
+        # in the sc case, q0=input compartment, and q1=qc
+
+        # get the global model parameters
+        v_c = model.v_c
+        cl = model.cl 
+        ka = model.ka
+        # get the parameters for each compartment 
+        # this is a list which 
+        compartment_parameters = model.list_comparments()
+        # now extract the ones we need
+        q_p = [qp for (v, qp) in compartment_parameters]
+        v_p = [vp for (vp, q) in compartment_parameters]
+
+        if model.delivery_mode == 'iv':
+            central = 
+            
+                dose_fn + 
+            ] + [
+                q_p[i] * (q[0] / v_c - q[i] / v_p[i]  for i in range(1, num_variables))
+            ]
+
 
     def solution(self, model, protocol, time):
         """
@@ -104,9 +137,11 @@ class Solution:
         system = self.ode_system(model, protocol)
         numerical_solution = scipy.integrate.odeint(func=system, y0=y0, t=time)
 
-        if model.delivery_mode == 'intravenous':
+
+        # TODO: update this to the new model modes
+        if model.delivery_mode == 'iv':
             return numerical_solution[0]
-        elif model.delivery_mode == 'subcutaneous':
+        elif model.delivery_mode == 'sc':
             return numerical_solution[1]
         else:
             raise ValueError("Model delivery mode incorrectly defined. Options are: 'intravenous', or 'subcutaneous'.")

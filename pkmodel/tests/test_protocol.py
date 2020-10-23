@@ -10,10 +10,6 @@ class ProtocolTest(unittest.TestCase):
         """
         Tests Protocol creation.
         """
-<<<<<<< HEAD
-        model = pk.Protocol()
-        self.assertEqual(model.time, 1)
-=======
         with self.assertRaises(TypeError):
             protocol = pk.Protocol('string')
         protocol = pk.Protocol()
@@ -82,4 +78,3 @@ class ProtocolTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             dose_func = lambda z: 0
             protocol.dose(func=dose_func)
->>>>>>> master
