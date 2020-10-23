@@ -6,15 +6,17 @@
 Welcome to pkmodel's documentation!
 ===================================
 
+Hello fellow coders <3
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-.. automodule:: pkmodel.model
+.. autoclass:: pkmodel.model
    :members:
-.. automodule:: pkmodel.protocol
+.. autoclass:: pkmodel.protocol
    :members:
-.. automodule:: pkmodel.solution
+.. autoclass:: pkmodel.solution
    :members:
 
 
