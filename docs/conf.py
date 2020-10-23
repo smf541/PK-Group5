@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'PK Model'
+project = 'pkmodel'
 copyright = '2020, Group 5'
 author = 'Group 5'
 
