@@ -20,20 +20,20 @@ This repository contains a Python library for specifying, solving and visualisin
 
 PK Model is a useful library for quantitatively describing the absorption, distribution, metabolism, and excretion of a drug through a patient's system. 
 
-The patient's body is modelled as one or more kinetically homogenous compartments into which a drug is initially administered and moves through over time. For example:
+The patient's body is modelled as one or more kinetically homogenous compartments: a primary central compartment into which the drug is administered and excreted, and zero or more peripheral compartments into which the drug may be distributed to/from. For example:
 
 ![Image of equation](https://latex.codecogs.com/gif.latex?\frac{\mathrm{d}&space;q_{c}}{\mathrm{d}&space;t}=&space;Dose\left&space;(&space;t&space;\right&space;)-&space;\frac{q^{_{c}}}{V_{c}}CL&space;-&space;Q_{p1}\left&space;(&space;\frac{q_{c}}{V_{c}}&space;-&space;\frac{q_{p1}}{V_{p1}}\right&space;))
 
 Where:
 
-    - Dose(t) is drug dose function
+    - Dose(t) is drug dose function (dosage with respect to time)
     - Vc [mL] is the volume of the central compartment
     - Vp1 [mL] is the volume of the first peripheral compartment
     - Vp1 [mL] is the volume of the peripheral compartment 
     - CL [mL/h] is the clearance/elimination rate from the central      compartment
     - Qp1 [mL/h] is the transition rate between central compartment and peripheral compartment 
 
-This easy-to-use package enables the drug quantity in each comparment to be tracked and visualised at different time points. The model is highly versatile, enabling users to alter parameters such as the number of peripheral compartments, the type of dosing, the dosing protocol, and more.
+This easy-to-use package enables the drug quantity in each comparment to be tracked and visualised at different time points. It is highly versatile, enabling users to alter parameters such as the number of peripheral compartments, the type of dosing, the dosing protocol, and more.
 
 PK Model is an up-and-coming Python package that strives to make pharmacokinetic modelling intuitive and user-friendly by providing a simple yet powerful model of drug delivery. 
 
@@ -60,7 +60,7 @@ If you wish to uninstall the library, you can do so using the following command:
 pip uninstall PKModel
 ```
 
-## Package Documentation and Requireements
+## Package Documentation and Requirements
 
 Our API Reference and User Guide is available on [Read the Docs](https://pk-model.readthedocs.io/en/latest/ "PK Model Documentation").
 
