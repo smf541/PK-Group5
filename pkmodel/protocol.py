@@ -1,10 +1,3 @@
-# Protocol class
-# With this we want the user to be able to:
-# - Specify the type of delivery of the drug (intravenous/subcutaneous)
-# - Specify the dynamics of the delivery
-# - Call the type as a property
-# - alter the dose function
-
 class Protocol:
     """A Pharmokinetic (PK) protocol
 
@@ -19,24 +12,40 @@ class Protocol:
     time_span: int, maximum time of the simulation
 
     """
-    def __init__(self, initial_dose=1, delivery_mode=1, time_span=1):
-        self.initial_dose = initial_dose
-        self.delivery_mode = delivery_mode
-        self.time_span = time_span
+    def __init__(self, initial_dose: float = 1.0, time_span: float = 1.0):
+        if type(initial_dose) not in [int, float]:
+            raise TypeError('initial_dose must be int or float')
+        if type(time_span) not in [int, float]:
+            raise TypeError('time_span must be int or float')
+        self.__Initial_dose = initial_dose
+        self.__Time_span = time_span
 
     @property
-    def type(self):
-        return self.delivery_mode
+    def name(self) -> str:
+        """str: name is a property constructed from the protocol parameters.
+        This protects data integrity by tying results to an immutable label.
+        """
+        self.__Name = "Protocol-initial_dose=" + str(self.__Initial_dose) + "-time_span=" + str(self.__Time_span)  # noqa: E501
+        # inline comment to flake8 to ignore line length needed for name string
+        return self.__Name
+
+    def __str__(self):
+        """Returns the name of the model as a string.
+        """
+        return self.name
 
     # Want to be able to access the dose
     @property
-    def starting_dose(self):
-        # naming this 'initial_dose' creates an error on line 25
-        return self.initial_dose
+    def initial_dose(self) -> float:
+        """float: The initial dose
+        """
+        return self.__Initial_dose
 
     @property
-    def time(self):
-        return self.time_span
+    def time_span(self) -> float:
+        """float: The time span
+        """
+        return self.__Time_span
 
     # now want a method where the user can access the dose(t)
     # function, which describes the rate of input of the drug over time
@@ -61,6 +70,7 @@ class Protocol:
 
         if func is not None:
             # we need a way to test that func is dependent on time and y
+            func(1, 2)  # Test that is accepts two arguments
             return func
         else:
             return lambda y, t: 0
