@@ -60,12 +60,14 @@ class Solution:
             out.append((self.models[i], self.protocols[i]))
         return out 
 
-    def remove(self, index):
+    def remove(self, index: int):
         """Removes a model and protocol pair from the models and
         protocols lists in the solution class.
         """
-        self.models.remove(index)
-        self.protocols.remove(index)
+        if type(index) != int:
+            raise TypeError('The index must be an integer')
+        del self.models[index]
+        del self.protocols[index]
 
     def ode_system(self, q, t, model, protocol):
         """
