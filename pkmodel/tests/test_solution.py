@@ -39,7 +39,7 @@ class SolutionTest(unittest.TestCase):
 
     def test_remove(self):
         """
-        Tests Solution addition of Models and Protocols.
+        Tests Solution removal of Models and Protocols.
         """
         solution = pk.Solution()
         model = pk.Model('iv')
@@ -50,24 +50,18 @@ class SolutionTest(unittest.TestCase):
             solution.remove()
         with self.assertRaises(TypeError):
             solution.remove('model')
-        with self.assertRaises(TypeError):
-            solution.remove('model', 'protocol')
-        with self.assertRaises(TypeError):
-            solution.remove(model, 'protocol')
-        with self.assertRaises(TypeError):
-            solution.remove('model', protocol)
-        with self.assertRaises(ValueError):
-            solution.remove(model, protocol)
+        with self.assertRaises(IndexError):
+            solution.remove(1)
         solution.add(model, protocol)
         self.assertEqual(solution.list_compartments, [(model, protocol)])
-        solution.remove(model, protocol)
+        solution.remove(0)
         self.assertEqual(solution.list_compartments, [])
         solution.add(model, protocol)
         solution.add(model2, protocol2)
         self.assertEqual(solution.list_compartments, [(model, protocol), (model2, protocol2)])
-        solution.remove(model, protocol)
-        self.assertEqual(solution.list_compartments, [(model2, protocol2)])
-        solution.remove(model2, protocol2)
+        solution.remove(1)
+        self.assertEqual(solution.list_compartments, [(model, protocol)])
+        solution.remove(0)
         self.assertEqual(solution.list_compartments, [])
-        with self.assertRaises(ValueError):
-            solution.remove(model2, protocol2)
+        with self.assertRaises(IndexError):
+            solution.remove(0)
