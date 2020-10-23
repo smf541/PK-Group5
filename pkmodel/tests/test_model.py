@@ -66,7 +66,7 @@ class ModelTest(unittest.TestCase):
 
     def test_create_initvalues_typeerror(self):
         """
-        Tests Model creation with initial values.
+        Tests Model creation with invalid initial values.
         """
         with self.assertRaises(TypeError):
             model = pk.Model('iv', V_c='a')
