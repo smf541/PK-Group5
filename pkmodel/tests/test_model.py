@@ -88,9 +88,12 @@ class ModelTest(unittest.TestCase):
             model.add_compartment(1.0)
         with self.assertRaises(TypeError):
             model.add_compartment('a', 'b')
+        self.assertEqual(len(model), 1)
         added = model.add_compartment(V_p_new=1.0, Q_p_new=1.1)  # noqa: F841
         # inline comment tells flake8 to ignore unused variable for test
+        self.assertEqual(len(model), 2)
         self.assertEqual(model.list_compartments(), [[1.0, 1.1]])
         model.add_compartment(1.2, 1.3)
+        self.assertEqual(len(model), 3)
         self.assertEqual(model.list_compartments(), [[1.0, 1.1], [1.2, 1.3]])
 
