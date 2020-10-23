@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "PKModel"
+version = "0.1.0"
+description = "A library for specifying, solving, and visualising a pharmacokinetic model"
+authors = ["Caitlin Ashcroft <caitlin.ashcroft@keble.ox.ac.uk>"]
+license = "Apache 2.0"
+
+[tool.poetry.dependencies]
+python = "^3.6"
+numpy = "^1.19.2"
+matplotlib = "^3.3.2"
+scipy = "^1.5.3"
+
+[tool.poetry.dev-dependencies]
+flake8 = "^3.8.4"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

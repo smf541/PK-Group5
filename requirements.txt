@@ -1,0 +1,14 @@
+certifi
+cycler
+flake8
+kiwisolver
+matplotlib
+mccabe
+numpy
+Pillow 
+pycodestyle 
+pyflakes
+pyparsing 
+python-dateutil 
+scipy 
+six
