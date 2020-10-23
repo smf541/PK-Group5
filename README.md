@@ -24,7 +24,7 @@ PK Model is a useful library for quantitatively describing the absorption, distr
 
 The patient's body is modelled as one or more kinetically homogenous compartments into which a drug is initially administered and moves through over time. This easy-to-use package then enables the drug quantity in each comparment to be tracked and visualised at different time points. 
 
-(https://latex.codecogs.com/gif.latex?\frac{\mathrm{d}&space;q_{c}}{\mathrm{d}&space;t}=&space;Dose\left&space;(&space;t&space;\right&space;)-&space;\frac{q^{_{c}}}{V_{c}}CL&space;-&space;Q_{p1}\left&space;(&space;\frac{q_{c}}{V_{c}}&space;-&space;\frac{q_{p1}}{V_{p1}}\right&space;)
+(https://latex.codecogs.com/gif.latex?\frac{\mathrm{d}&space;q_{c}}{\mathrm{d}&space;t}=&space;Dose\left&space;(&space;t&space;\right&space;)-&space;\frac{q^{_{c}}}{V_{c}}CL&space;-&space;Q_{p1}\left&space;(&space;\frac{q_{c}}{V_{c}}&space;-&space;\frac{q_{p1}}{V_{p1}}\right&space;))
 
 The model is highly versatile, enabling users to alter parameters such as drug dosage, delivery strategy, the time span over which the drug is delivered, and more.
 
