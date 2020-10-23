@@ -161,11 +161,7 @@ class Solution:
     # position of the array defined above. If subcutaneous, we are interested
     # in the variable at the 1th position.
 
-<<<<<<< HEAD
     def visualise(self, layout='overlay', time_res=100):
-=======
-    def visualise(self, inputs=None, layout='overlay', time_res=100):
->>>>>>> 0bac4f55dd42676d443dac809c21d26987d836d3
         """
         Plots the ODE solutions of the model.
         
