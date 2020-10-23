@@ -103,23 +103,27 @@ class Solution:
         v_c = model.v_c
         cl = model.cl
         ka = model.ka
+
         # get the parameters for each compartment
         # this is a list which
         compartment_parameters = model.list_compartments()
+
         # now extract the ones we need
         q_p = [qp for (v, qp) in compartment_parameters]
         v_p = [vp for (vp, q) in compartment_parameters]
 
         # create a list of transitions
 
-        transitions = [q_p[i] * ((q[0] / v_c) - (q[i] / v_p[i])) for i in range(1, num_variables)]
+        transitions = [q_p[i] * ((q[0] / v_c) - (q[i] / v_p[i])) for i in range(0, num_variables)]
 
         if model.delivery_mode == 'iv':
             central = dose_fn(q, t) - (q[0] / v_c) * cl  # need to pass this dose_fn q,t as we need it in float type
             # now update central to include transitions
             for transition in transitions:
-                central += transition
-            return [central].append(transitions)
+                central -= transition
+            return_list = [central]
+            return_list += transitions
+            return return_list
 
         elif model.delivery_mode == 'sc':
             input = dose_fn(q, t) - ka * q[0]
