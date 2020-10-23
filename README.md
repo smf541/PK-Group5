@@ -24,13 +24,12 @@ PK Model is a useful library for quantitatively describing the absorption, distr
 
 The patient's body is modelled as one or more kinetically homogenous compartments into which a drug is initially administered and moves through over time. This easy-to-use package then enables the drug quantity in each comparment to be tracked and visualised at different time points. 
 
-(https://latex.codecogs.com/gif.latex?\frac{\mathrm{d}&space;q_{c}}{\mathrm{d}&space;t}=&space;Dose\left&space;(&space;t&space;\right&space;)-&space;\frac{q^{_{c}}}{V_{c}}CL&space;-&space;Q_{p1}\left&space;(&space;\frac{q_{c}}{V_{c}}&space;-&space;\frac{q_{p1}}{V_{p1}}\right&space;)
+(https://latex.codecogs.com/gif.latex?\frac{\mathrm{d}&space;q_{c}}{\mathrm{d}&space;t}=&space;Dose\left&space;(&space;t&space;\right&space;)-&space;\frac{q^{_{c}}}{V_{c}}CL&space;-&space;Q_{p1}\left&space;(&space;\frac{q_{c}}{V_{c}}&space;-&space;\frac{q_{p1}}{V_{p1}}\right&space;))
 
 The model is highly versatile, enabling users to alter parameters such as drug dosage, delivery strategy, the time span over which the drug is delivered, and more.
 
 
 PK Model is an up-and-coming Python package that strives to make pharmacokinetic modelling intuitive and user-friendly by providing a simple yet powerful model of drug delivery. 
-
 
 
 ## Using the PK Model library
@@ -54,13 +53,15 @@ If you wish to uninstall the library, you can do so using the following command:
 pip uninstall PKModel
 ```
 
-## Package Documentation 
+## Package Documentation and Requirements
 
 Our API Reference and User Guide is available on [Read the Docs](https://pk-model.readthedocs.io/en/latest/ "PK Model Documentation")
 
+The dependencies for this package can be found in the list of [Requirements](https://github.com/smf541/PK-Group5/blob/master/requirements.txt). Note: all dependencies are automatically installed when the PK Model package is installed. 
+
 ## Contributing 
 
-For instructions on how to contribute to PK model, see the [Contributor README] (https://github.com/smf541/PK-Group5/blob/master/docs/contributor_README.md)
+For instructions on how to contribute to PK model, see the [Contributor README](https://github.com/smf541/PK-Group5/blob/master/docs/contributor_README.md)
 
 
 
