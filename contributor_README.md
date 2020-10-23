@@ -46,6 +46,13 @@ git merge origin/master
 If Git finds any conflicts that it can't sort out automatically, it will helpfully mark these for you. Open the file that git complains about (e.g. `CONFLICT (content): Merge conflict in <filename>`), find the conflicting lines, and resolve the conflict in whatever way you see fit. Make sure to remove the many flags that Git has added to point you towards the conflict!
 You can then add and commit the resolved file and push to your branch as described above, and keep working in your branch!
 
+If the changes you have made require new packages, you should add these to the `requirements.txt` file. You can do this either manually by simply writing the name of the package on a new line, or use poetry to first add the package to the pyproject.toml file and then export the list of required packages to `requirements.txt`: 
+```bash 
+poetry add <package name>
+poetry export -f --dev --without-hashes requirements.txt --output requirements.txt
+```
+
+Adding the `--dev` flag will include development dependencies, and omitting `--without-hashes` would mean that hashes are added to `requirements.txt`. Hashes can be used to verify that you are really downloading the package you want, and not something malicious masquerading as the package.
 
 ## Style guide
 
@@ -57,7 +64,8 @@ Unless there is a good reason for ignoring the linter, your pull request will no
 
 ### Naming conventions
 
-Most methods and functions have one-word names. Where the name consists of multiple words, these are connected by an underscore. 
+All object names should be simple and descriptive. Most have one-word names, and where the name consists of multiple words, these are connected by an underscore. Care should be taken to avoid using protected words as variable names since this will prevent your code from being interpreted correctly.
+
 Parameter names are consistent with the variables of the model equations that form the base of [this library's functionalities](https://github.com/smf541/PK-Group5#about, "Functionality"). 
 
 ### Documentation
