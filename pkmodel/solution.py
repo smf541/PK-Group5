@@ -6,9 +6,14 @@
 
 import numpy
 import matplotlib.pyplot
+<<<<<<< HEAD
 import scipy
 from protocol import Protocol
 from model import Model
+=======
+from pkmodel import Protocol
+from pkmodel import Model
+>>>>>>> 8b5954568114b67c6192458224d8ae0bd4a3aec8
 
 
 class Solution:
@@ -143,7 +148,11 @@ class Solution:
     # position of the array defined above. If subcutaneous, we are interested
     # in the variable at the 1th position.
 
+<<<<<<< HEAD
     def visualise(self, inputs, layout='overlay', time_res=100):
+=======
+    def visualise(self, inputs=None, layout='overlay', time_res=100):
+>>>>>>> 8b5954568114b67c6192458224d8ae0bd4a3aec8
         """
         Plots the ODE solutions of the model.
         
@@ -161,6 +170,8 @@ class Solution:
         array used for plotting.
         
         """
+        if type(inputs) == None:
+            inputs=self.list 
         for input in inputs:
             model = input[0]  # specify where the model object is 
             protocol = input[1]  # specify where the protocol object is 
