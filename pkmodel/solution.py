@@ -7,6 +7,7 @@
 import numpy
 import matplotlib.pyplot
 from protocol import Protocol
+from model import Model
 
 class Solution:
     """A Pharmokinetic (PK) model solution
@@ -43,48 +44,22 @@ class Solution:
         self.models.remove(model)
         self.protocols.remove(protocol)
 
-    # Below two functions don't strictly need to be a class method, 
-    # could have them as external functions and call them in, but that's
-    # not as clean 
-
-    def get_model_variables(self, model):
+    def ode_system(self, q, t, model, protocol):
         """
-        Takes a Model object and returns the variables in it as a
-        1-D array 
-
-        Parameters:
-        ----------
-
-        model: Model object
-
-        returns: 1-D numpy array
-        """
-        
-
-    def ode_system(self, y, t, model, protocol):
-        """
-        Takes as input a Model object and a Protocol object, 
+        Takes as input an array-like list of variables q, a float time t, 
+        a Model object and a Protocol object, 
         then returns the system of ODEs for this pair 
 
         Parameters:
         ----------
-
+        q: array-like object of variables q
+        t: float, representing time 
         model: Model object
         protocol: Protocol object
 
         returns: 1-D list of functions of ordinary differential equations 
         """
         dose_fn = protocol.dose()
-        # From what I remember of how odeint works, it's enough to pass it
-        # a list of expressions, which calculate a value
-        # So, try and express the system as such:
-
-        # First unpack the variables, which should be an array
-        # Create an array of variables 
-
-
-        # define the rate in the central compartment, depending on the model type
-        # the the number of qn variables in the model 
 
         if model.delivery_mode == 'iv':
             num_variables = len(model.list_comparments())
@@ -105,13 +80,23 @@ class Solution:
         q_p = [qp for (v, qp) in compartment_parameters]
         v_p = [vp for (vp, q) in compartment_parameters]
 
+        # create a list of transitions
+        transitions = [q_p[i] * ((q[0] / v_c) - (q[i] / v_p[i])) for i in range(1, num_variables)]
+
         if model.delivery_mode == 'iv':
-            central = 
-            
-                dose_fn + 
-            ] + [
-                q_p[i] * (q[0] / v_c - q[i] / v_p[i]  for i in range(1, num_variables))
-            ]
+            central = dose_fn(t) - (q[0] / v_c) * cl  # need to pass this dose_fn t as we need it in float type
+            # now update central to include transitions
+            for transition in transitions:
+                central += transition
+            return [central].append(transitions)
+
+        elif model.delivery_mode == 'sc':
+            input = dose_fn(t) - ka * q[0]
+            central = ka * q[0] - (q[1] / v_c) * cl
+            for transition in transitions:
+                central += transitions
+            return [input, central].append(transitions)
+
 
 
     def solution(self, model, protocol, time):
@@ -127,12 +112,19 @@ class Solution:
 
         returns: numpy ndarray, containing the numerical solutions to the system
         """
-        with numpy as np:
-            y0 = np.zeros((len(model)+1), dtype=float)
-            # set the first element of the initial conditions array y0
-            # to be the initial value of the 0th compartment, which is the 
-            # compartment in which we get drug delivery (central for intravenous)
-            y0[0] = protocol.starting_dose
+        if model.delivery_mode == 'iv':
+            num_variables = len(model.list_comparments()) + 1
+        elif model.delivery_mode == 'sc':
+            num_variables = len(model.list_comparments()) + 2
+
+        y0 = numpy.zeros((num_variables), dtype=float)
+        # set the first element of the initial conditions array y0
+        # to be the initial value of the 0th compartment, which is the 
+        # compartment in which we get drug delivery (central for intravenous)
+        if model.delivery_mode == 'iv':
+            y0[0] = protocol.initial_dose
+        elif model.delivery_mode == 'sc':
+            y0[1] = protocol.initial_dose
         # Now we need to define the model in terms of ODEs
         system = self.ode_system(model, protocol)
         numerical_solution = scipy.integrate.odeint(func=system, y0=y0, t=time)
@@ -172,17 +164,23 @@ class Solution:
         """
         for input in inputs:
             model = input[0]  # specify where the model object is 
-            protocol = input[1] # specify where the protocol object is 
+            protocol = input[1]  # specify where the protocol object is 
             time = numpy.linspace(0, protocol.time_span, time_res) 
             ODE_solution = self.solution(model, protocol, time_res) # make this a function of time array
             matplotlib.pyplot.plot(time, ODE_solution)
         matplotlib.pyplot.show()
 
-model1 = 1
-model2 = 2
+
+model1 = Model('iv')
+model2 = Model('sc')
 prot1 = Protocol()
 prot2 = Protocol()
 
 sol = Solution()
 sol.add(model1, prot1)
 sol.add(model2, prot2)
+
+time = numpy.linspace(0, 10, 100)
+output1 = sol.solution(model1, prot1, time)
+output2 = sol.solution(model2, prot2, time)
+output3 = sol.solution(model1, prot2, time)
