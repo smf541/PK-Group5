@@ -11,7 +11,7 @@ class SolutionTest(unittest.TestCase):
         Tests Solution creation.
         """
         solution = pk.Solution()
-        self.assertEqual(solution.list, [])
+        self.assertEqual(solution.list_compartments, [])
 
     def test_add(self):
         """
@@ -31,8 +31,8 @@ class SolutionTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             solution.add('model', protocol)
         solution.add(model, protocol)
-        self.assertEqual(solution.list, [(model, protocol)])
+        self.assertEqual(solution.list_compartments, [(model, protocol)])
         model2 = pk.Model('sc')
         protocol2 = pk.Protocol(initial_dose=1.1, time_span=1.2)
         solution.add(model2, protocol2)
-        self.assertEqual(solution.list, [(model, protocol), (model2, protocol2)])
+        self.assertEqual(solution.list_compartments, [(model, protocol), (model2, protocol2)])
