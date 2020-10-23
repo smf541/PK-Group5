@@ -12,7 +12,7 @@ class Solution:
     """The Solution class structures access to the SciPy ODE solver.
     It also contains methods to visualise the solutions for the central compartment,
     in side-by-side or overlay views. The user can add or remove the models and protocols
-    to be solved. 
+    to be solved.
     """
     def __init__(self):
         """Initialises a Solution object, which holds a list of model objects
@@ -56,9 +56,9 @@ class Solution:
         out = []
         # We assume protocols same length as methods, because the user only adds
         # them as a pair.
-        for i in range(0, len(self.models)):  
+        for i in range(0, len(self.models)):
             out.append((self.models[i], self.protocols[i]))
-        return out 
+        return out
 
     def remove(self, index):
         """Removes a model and protocol pair from the models and
@@ -111,14 +111,14 @@ class Solution:
             central = dose_fn(q, t) - (q[0] / v_c) * cl  # need to pass this dose_fn q,t as we need it in float type
             # now update central to include transitions
             for transition in transitions:
-                central += transition
+                central -= transition
             return [central].append(transitions)
 
         elif model.delivery_mode == 'sc':
             input = dose_fn(q, t) - ka * q[0]
             central = ka * q[0] - (q[1] / v_c) * cl
             for transition in transitions:
-                central += transitions
+                central -= transitions
             return [input, central].append(transitions)
 
     def solution(self, model, protocol, time):
@@ -158,11 +158,10 @@ class Solution:
         print(numerical_solution)
 
         # need to unpack the t and y arrays from numerical_solution
-
+        # TODO: Re-name this time array to a unique variable name 
         time = numerical_solution.t
         numerical_solution = numerical_solution.y # cut down the output to just the integrated solution
 
-        # TODO: update this to the new model modes
         if model.delivery_mode == 'iv':
             return numerical_solution[0], time
         elif model.delivery_mode == 'sc':

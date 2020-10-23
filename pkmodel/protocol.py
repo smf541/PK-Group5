@@ -50,7 +50,7 @@ class Protocol:
     # now want a method where the user can access the dose(t)
     # function, which describes the rate of input of the drug over time
 
-    def dose(self, time=None, func=None):
+    def dose(self, func=None):
         # we assume the default case is the instantaneous injection,
         # and so time doesn't need to be specified by the user, thus
         # by default we set it to None
@@ -59,7 +59,6 @@ class Protocol:
 
         Parameters
         ----------
-        time: float, time variable for the simulation, set to None by default
         func: function, function describing the rate of drug input over time,
         set to None by default
 
@@ -70,7 +69,7 @@ class Protocol:
 
         if func is not None:
             # we need a way to test that func is dependent on time and y
-            func(1, 2)  # Test that is accepts two arguments
+            func(1, 2)  # Test that it accepts two arguments
             return func
         else:
             return lambda y, t: 0
