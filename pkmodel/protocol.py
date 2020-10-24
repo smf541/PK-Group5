@@ -63,7 +63,7 @@ class Protocol:
 
     def add_dose_function(self, func=None):
         """
-        Allows the user to specify the function describing 
+        Allows the user to specify the function describing
         rate of drug input over time
 
         Parameters
