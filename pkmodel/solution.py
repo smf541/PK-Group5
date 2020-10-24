@@ -1,12 +1,7 @@
 import pkmodel as pk
-#
-# Solution class
-# Want users to be able to add multiple pairs of models and protocols
-# want these to then have ODE solutions that are accessible via plots
-# or as array
-
 import numpy
 import scipy.integrate
+import matplotlib.pyplot
 
 class Solution:
     """The Solution class structures access to the SciPy ODE solver.
@@ -90,12 +85,15 @@ class Solution:
             1-D list of functions of ordinary differential equations 
         """
         dose_fn = protocol.dose()
-
+        # get the number of variables in the model, from len(q)
+        num_variables = len(q)
+        # get the number of compartments 
+        num_compartments = len(model.list_compartments())
+        # check that for iv num_var is one more than num_comp, and two more for sc
         if model.delivery_mode == 'iv':
-            num_variables = len(model.list_compartments())
-        elif model.delivery_mode == 'sc':
-            num_variables = len(model.list_compartments()) + 1
-        
+            assert num_variables == num_compartments + 1, "Input array q should be one larger than the number of model compartments"
+        elif model.delivery_mode == "sc":
+            assert num_variables == num_compartments + 2, "Input array q should be one larger than the number of model compartments"
         # in the iv case, q0=qc
         # in the sc case, q0=input compartment, and q1=qc
 
@@ -114,13 +112,12 @@ class Solution:
 
         # create a list of transitions
         if model.delivery_mode == 'iv':
-            transitions = [q_p[i] * ((q[0] / v_c) - (q[i] / v_p[i])) for i in range(0, num_variables)]
+            transitions = [q_p[i] * ((q[0] / v_c) - (q[i+1] / v_p[i])) for i in range(0, num_compartments)]
         elif model.delivery_mode == 'sc':
-            transitions = [q_p[i] * ((q[0] / v_c) - (q[i] / v_p[i])) for i in range(0, num_variables)]
-            
+            transitions = [q_p[i] * ((q[0] / v_c) - (q[i+2] / v_p[i])) for i in range(0, num_compartments)]
 
         if model.delivery_mode == 'iv':
-            central = dose_fn(q, t) - (q[0] / v_c) * cl  # need to pass this dose_fn q,t as we need it in float type
+            central = dose_fn(t, q) - (q[0] / v_c) * cl  # need to pass this dose_fn q,t as we need it in float type
             # now update central to include transitions
             for transition in transitions:
                 central -= transition
@@ -129,11 +126,13 @@ class Solution:
             return return_list
 
         elif model.delivery_mode == 'sc':
-            input = dose_fn(q, t) - ka * q[0]
+            input = dose_fn(t, q) - ka * q[0]
             central = ka * q[0] - (q[1] / v_c) * cl
             for transition in transitions:
-                central -= transitions
-            return [input, central].append(transitions)
+                central -= transition
+            return_list = [input, central]
+            return_list += transitions
+            return return_list
 
     def solution(self, model, protocol, time):
         """Calcuates the ODE solution for a specific model and protocol
@@ -147,6 +146,7 @@ class Solution:
         Returns: 
             numpy (ndarray): the numerical solutions to the system
         """
+        # Get an array to store all the variables in the system
         if model.delivery_mode == 'iv':
             num_variables = len(model.list_compartments()) + 1
         elif model.delivery_mode == 'sc':
@@ -156,10 +156,9 @@ class Solution:
         # Set the first element of the initial conditions array y0
         # to be the initial value of the 0th compartment, which is the 
         # compartment in which we get drug delivery (central for intravenous)
-        if model.delivery_mode == 'iv':
-            y0[0] = protocol.initial_dose
-        elif model.delivery_mode == 'sc':
-            y0[1] = protocol.initial_dose
+
+        # However in both cases, drug is always delivered to q0
+        y0[0] = protocol.initial_dose
         # Now we need to define the model in terms of ODEs
         system = lambda t, q: self.ode_system(q, t, model=model,
             protocol=protocol)
@@ -168,19 +167,16 @@ class Solution:
         numerical_solution = scipy.integrate.solve_ivp(fun=system, y0=y0,
             t_span=time_span, t_eval=time)
 
-        # need to unpack the t and y arrays from numerical_solution
-        # TODO: Re-name this time array to a unique variable name 
-        time = numerical_solution.t
         numerical_solution = numerical_solution.y # cut down the output to just the integrated solution
 
         if model.delivery_mode == 'iv':
-            return numerical_solution[0], time  # the numerical solution for intravenous dosing
+            return numerical_solution[0]  # the numerical solution for intravenous dosing
         elif model.delivery_mode == 'sc':
-            return numerical_solution[1], time  # the numerical solution for subcutaneous dosing
+            return numerical_solution[1]  # the numerical solution for subcutaneous dosing
         else:
             raise ValueError("Model delivery mode incorrectly defined. Options are: 'intravenous', or 'subcutaneous'.")
 
-    def visualise(self, layout='overlay', time_res=100):
+    def visualise(self, layout='overlay', time_res=1000):
         """Plots the ODE solutions of the model using Matplotlib.
         Layout can be chosen to be overlay or side-by-side.
         Currently supports up to two side-by-side plots.
@@ -195,11 +191,11 @@ class Solution:
                 elements in the time and ODE solution array used for plotting.
         """
         # Generate tuples with (model, protocol) pairs as a list of tuples
-        inputs = self.list_compartments()
+        inputs = self.list_compartments
         # Generate figures to be populated with 'overlay' or 'side-by-side' plots
-        if (layout == 'overlay') or (layout == 'side_by_side' and len(inputs) == 1): #make empty figure
+        if layout == 'overlay' or (layout == 'side_by_side' and len(inputs) == 1): #make empty figure
             fig = matplotlib.pyplot.figure(figsize=(10.0, 3.0))
-        if layout == 'side_by_side' and len(inputs) == 2:
+        elif layout == 'side_by_side' and len(inputs) == 2:
             fig = matplotlib.pyplot.figure(figsize=(10.0, 3.0))
             plot1 = fig.add_subplot(1, 2, 1)
             plot2 = fig.add_subplot(1, 2, 2)
@@ -211,9 +207,9 @@ class Solution:
             model = input[0]  # the model object is the first in the tuple
             protocol = input[1]  # the protocol object is the second in the tuple
             time = numpy.linspace(0, protocol.time_span, time_res) # generate time array
-            ODE_solution = self.solution(model, protocol, time_res) # a function of the time array
-            if (layout == 'overlay') or (layout == 'side_by_side' and len(inputs == 1)):
-                fig.plot(time, ODE_solution)
+            ODE_solution = self.solution(model, protocol, time) # a function of the time array
+            if (layout == 'overlay') or (layout == 'side_by_side' and len(inputs) == 1):
+                matplotlib.pyplot.plot(time, ODE_solution)
             if layout == 'side_by_side' and len(inputs) == 2:
                 if i == 0:
                     plot1.plot(time, ODE_solution)

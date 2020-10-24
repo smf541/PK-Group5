@@ -76,13 +76,13 @@ class Protocol:
             func (function): function describing the rate of drug input over time,
                 defaults to None
         Returns:
-            dose(y, t) (function)
+            dose(t, y) (function)
         """
 
         if func is not None:  # Tests that func is dependent on time and y
             func(1, 2)  # Test that func accepts two arguments
             return func
         else:
-            return lambda y, t: 0
+            return lambda t, y: 0
             # Default case is the instantaneous addition, in which
             # case, there is no further addition, and rate is 0.
