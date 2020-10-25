@@ -244,7 +244,7 @@ class Solution:
                     layout == 'side_by_side' and len(inputs) == 1):
                 label = 'Plot ' + str(i + 1)
                 matplotlib.pyplot.plot(time, ODE_solution, label=label)
-                print(label + ' = ' model.name)
+                print(label + ' = ' + model.name)
             elif layout == 'side_by_side' and len(inputs) == 2:
                 if i == 0:
                     plot1.plot(time, ODE_solution, label='Plot 1')
