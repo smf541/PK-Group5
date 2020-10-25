@@ -86,7 +86,7 @@ class Solution:
         Returns:
             1-D list of functions of ordinary differential equations
         """
-        dose_fn = protocol.dose()
+        dose_fn = protocol.dose
         # get the number of variables in the model, from len(q)
         num_variables = len(q)
         # get the number of compartments
