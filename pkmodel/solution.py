@@ -149,8 +149,8 @@ class Solution:
         Args:
             model (Model object)
             protocol (Protocol object)
-            time (tuple: t0, tmax): t0 start of the integration and
-            tmax the end.
+            time (list): t0 start of the integration and
+            tmax the end [hours]
 
         Returns:
             numpy (ndarray): the numerical solutions to the system
@@ -203,6 +203,7 @@ class Solution:
                each other on one plot or as independent subplots side by side.
             time_res (int): the time resolution, specified as the number of
                 elements in the time and ODE solution array used for plotting.
+                Default is 100 elements.
         """
         # Generate tuples with (model, protocol) pairs as a list of tuples
         inputs = self.list_compartments
@@ -241,11 +242,15 @@ class Solution:
             # a function of the time array
             if (layout == 'overlay') or (
                     layout == 'side_by_side' and len(inputs) == 1):
-                matplotlib.pyplot.plot(time, ODE_solution)
+                label = 'Plot ' + str(i + 1)
+                matplotlib.pyplot.plot(time, ODE_solution, label=label)
+                print(label + ' = ' model.name)
             elif layout == 'side_by_side' and len(inputs) == 2:
                 if i == 0:
-                    plot1.plot(time, ODE_solution)
+                    plot1.plot(time, ODE_solution, label='Plot 1')
+                    print('Plot 1 = ' + model.name)
                 elif i == 1:
-                    plot2.plot(time, ODE_solution)
+                    plot2.plot(time, ODE_solution, label='Plot 2')
+                    print('Plot 2 = ' + model.name)
             i += 1
         matplotlib.pyplot.show()
