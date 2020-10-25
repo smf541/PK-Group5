@@ -5,11 +5,13 @@ class Protocol:
     """
     def __init__(self, initial_dose: float = 1.0, time_span: float = 1.0):
         """Initialises a protocol object with chosen initial dose and time span.
-        Delivery method is held in the model object (see: Model class documentation).
+        Delivery method is held in the model object
+        (see: Model class documentation).
 
         Args:
             initial_dose (float): the chosen initial dose, default is 1.0 [ng]
-            time_span (float): the time span, the maximum time of the simulation [hours]
+            time_span (float): the time span, the maximum time
+                of the simulation [hours]
         """
         if type(initial_dose) not in [int, float]:
             raise TypeError('initial_dose must be int or float')
@@ -28,8 +30,8 @@ class Protocol:
         Returns:
             name (string)
         """
-        self.__Name = "Protocol-initial_dose=" + str(self.__Initial_dose) + "-time_span=" + str(self.__Time_span)  # noqa: E501
-        # inline comment to flake8 to ignore line length needed for name string
+        self.__Name = ("Protocol-initial_dose=" + str(self.__Initial_dose)
+                       + "-time_span=" + str(self.__Time_span))
         return self.__Name
 
     def __str__(self):
@@ -72,9 +74,10 @@ class Protocol:
         specified by the user; thus by default we set it to None.
 
         Args:
-            time (float): time variable for the simulation, defaults to None [hours]
-            func (function): function describing the rate of drug input over time,
-                defaults to None
+            time (float): time variable for the simulation,
+                defaults to None [hours]
+            func (function): function describing the rate of drug
+                input over time, defaults to None
         Returns:
             dose(t, y) (function)
         """
