@@ -86,7 +86,7 @@ class Solution:
         Returns:
             1-D list of functions of ordinary differential equations
         """
-        dose_fn = protocol.dose
+        dose_fn = protocol.dose()
         # get the number of variables in the model, from len(q)
         num_variables = len(q)
         # get the number of compartments
@@ -212,17 +212,25 @@ class Solution:
                 layout == 'side_by_side' and len(inputs) == 1):
             # make empty figure
             fig = matplotlib.pyplot.figure(figsize=(10.0, 3.0))
+            # annotate
+            matplotlib.pyplot.xlabel("Time (hrs)")
+            matplotlib.pyplot.ylabel("$q_{c}$")
         elif layout == 'side_by_side' and len(inputs) == 2:
-            fig = matplotlib.pyplot.figure(figsize=(10.0, 3.0))
+            fig = matplotlib.pyplot.figure(figsize=(10.0, 4.0))
             plot1 = fig.add_subplot(1, 2, 1)
             plot2 = fig.add_subplot(1, 2, 2)
+            # create axes labels
+            plot1.set_xlabel("Time (hrs)")
+            plot2.set_xlabel("Time (hrs)")
+            plot1.set_ylabel("$q_{c}$")
+            plot2.set_ylabel("$q_{c}$")
         else:
             raise ValueError(
                 """Solution.Visualise() supports overlay or side-by-side plots,
                  with max of 2 inputs""")
         # Loop over (model, protocol) objects to solve and then plot each
+        i = 0
         for input in inputs:
-            i = 0
             model = input[0]
             # the model object is the first in the tuple
             protocol = input[1]
@@ -234,10 +242,10 @@ class Solution:
             if (layout == 'overlay') or (
                     layout == 'side_by_side' and len(inputs) == 1):
                 matplotlib.pyplot.plot(time, ODE_solution)
-            if layout == 'side_by_side' and len(inputs) == 2:
+            elif layout == 'side_by_side' and len(inputs) == 2:
                 if i == 0:
                     plot1.plot(time, ODE_solution)
-                if i == 1:
+                elif i == 1:
                     plot2.plot(time, ODE_solution)
-            i = i + 1
+            i += 1
         matplotlib.pyplot.show()
