@@ -13,7 +13,8 @@ class ProtocolTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             protocol = pk.Protocol('string')
         protocol = pk.Protocol()
-        self.assertEqual(protocol.name, 'Protocol-initial_dose=1.0-time_span=1.0')  # noqa: E501
+        self.assertEqual(protocol.name,
+                         'Protocol-initial_dose=1.0-time_span=1.0')
 
     def test_encapsulation(self):
         """

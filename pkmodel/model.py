@@ -19,9 +19,10 @@ class Model:
                 for example for subcutaneous dosing [/h]
         """
         # Verify argument types
-        if delivery_mode not in ['intravenous', 'iv', 'IV', 'subcutaneous', 'subq', 'sc', 'SC']:  # noqa: E501
-            raise ValueError('Given delivery_mode invalid; try "intravenous" or "subcutaneous"')  # noqa: E501
-            # inline comments to flake8 to ignore line length for strings
+        if delivery_mode not in ['intravenous', 'iv', 'IV',
+                                 'subcutaneous', 'subq', 'sc', 'SC']:
+            raise ValueError('Given delivery_mode invalid;'
+                             'try "intravenous" or "subcutaneous"')
         if type(V_c) not in [int, float]:
             raise TypeError('V_c must be int or float')
         if type(CL) not in [int, float]:
@@ -62,8 +63,10 @@ class Model:
         """str: name is a property constructed from the model parameters.
         This protects data integrity by tying results to an immutable label.
         """
-        self.__Name = "Model-" + self.__delivery_mode + "-V_c=" + str(self.__V_c) + "-CL=" + str(self.__CL) + "-Ka=" + str(self.__Ka) + "-" + str(len(self.__V_p)) + "compartments"  # noqa: E501
-        # inline comment to flake8 to ignore line length needed for name string
+        self.__Name = ("Model-" + self.__delivery_mode + "-V_c="
+                       + str(self.__V_c) + "-CL=" + str(self.__CL)
+                       + "-Ka=" + str(self.__Ka) + "-"
+                       + str(len(self.__V_p)) + "compartments")
         return self.__Name
 
     @property
