@@ -35,7 +35,8 @@ class SolutionTest(unittest.TestCase):
         model2 = pk.Model('sc')
         protocol2 = pk.Protocol(initial_dose=1.1, time_span=1.2)
         solution.add(model2, protocol2)
-        self.assertEqual(solution.list_compartments, [(model, protocol), (model2, protocol2)])
+        self.assertEqual(solution.list_compartments,
+                         [(model, protocol), (model2, protocol2)])
 
     def test_remove(self):
         """
@@ -58,7 +59,8 @@ class SolutionTest(unittest.TestCase):
         self.assertEqual(solution.list_compartments, [])
         solution.add(model, protocol)
         solution.add(model2, protocol2)
-        self.assertEqual(solution.list_compartments, [(model, protocol), (model2, protocol2)])
+        self.assertEqual(solution.list_compartments,
+                         [(model, protocol), (model2, protocol2)])
         solution.remove(1)
         self.assertEqual(solution.list_compartments, [(model, protocol)])
         solution.remove(0)
@@ -77,7 +79,7 @@ class SolutionTest(unittest.TestCase):
         model2 = pk.Model('iv')
         protocol2 = pk.Protocol(initial_dose=2, time_span=1.3)
         solution1.add(model1, protocol1)
-        solution2.add(model2, solution2)
+        solution2.add(model2, protocol2)
         with self.assertRaises(TypeError):
             solution1.solution()
         with self.assertRaises(TypeError):
