@@ -1,6 +1,6 @@
 class Protocol:
     """The Protocol class holds the pharmacokinetic parameters related to
-    the dose and time span of the dose. It contains a method to return a 
+    the dose and time span of the dose. It contains a method to return a
     dose function for the chosen parameters.
     """
     def __init__(self, initial_dose: float = 1.0, time_span: float = 1.0):
