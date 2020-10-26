@@ -19,6 +19,8 @@ class Protocol:
             raise TypeError('time_span must be int or float')
         self.__Initial_dose = initial_dose
         self.__Time_span = time_span
+        # define the default dose function to be f(t,y)=0
+        self.__Dose_func = lambda t, y: 0
 
     @property
     def name(self) -> str:
@@ -63,29 +65,31 @@ class Protocol:
     # now want a method where the user can access the dose(t)
     # function, which describes the rate of input of the drug over time
 
-    def dose(self, func=None):
-        # we assume the default case is the instantaneous injection,
-        # and so time doesn't need to be specified by the user, thus
-        # by default we set it to None
+    @property
+    def dose(self):
         """
-        Method to access the dose(t) function, which describes the rate
-        of input of the drug over time. We assume the default case is the
-        instantaneous intravenous injection and so time doesn't need to be
-        specified by the user; thus by default we set it to None.
+        Returns the function describing rate of drug input over time
+        """
+        return self.__Dose_func
+        # default case is the instantaneous addition, in which
+        # case, there is no further addition, and rate is 0
 
-        Args:
-            time (float): time variable for the simulation,
-                defaults to None [hours]
-            func (function): function describing the rate of drug
-                input over time, defaults to None
-        Returns:
-            dose(t, y) (function)
+    def add_dose_function(self, func=None):
+        """
+        Allows the user to specify the function describing
+        rate of drug input over time
+
+        Parameters
+        ----------
+        func: function, function describing the rate of drug input over time,
+        set to None by default
+
+        Returns
+        -------
+        dose(t, y): function
         """
 
-        if func is not None:  # Tests that func is dependent on time and y
-            func(1, 2)  # Test that func accepts two arguments
-            return func
-        else:
-            return lambda t, y: 0
-            # Default case is the instantaneous addition, in which
-            # case, there is no further addition, and rate is 0.
+        if func is not None:
+            # we need a way to test that func is dependent on time and y
+            func(1, 2)  # Test that it accepts two arguments
+            self.__Dose_func = func
