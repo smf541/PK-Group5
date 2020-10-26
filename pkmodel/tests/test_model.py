@@ -13,8 +13,8 @@ class ModelTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             model = pk.Model('string')
         model = pk.Model('sc')
-        self.assertEqual(model.name, 'Model-sc-V_c=1.0-CL=1.0-Ka=1.0-0compartments')  # noqa: E501
-        # inline comment to flake8 to ignore line length required for name
+        self.assertEqual(model.name,
+                         'Model-sc-V_c=1.0-CL=1.0-Ka=1.0-0compartments')
 
     def test_encapsulation(self):
         """

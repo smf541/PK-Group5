@@ -1,18 +1,18 @@
 class Protocol:
-    """A Pharmokinetic (PK) protocol
-
-    Parameters
-    ----------
-
-    initial_dose: float, the initial dose of the drug
-    into the system
-
-    delivery_mode: string, either 'intravenous' or 'subcutaneous'
-
-    time_span: int, maximum time of the simulation
-
+    """The Protocol class holds the pharmacokinetic parameters related to
+    the dose and time span of the dose. It contains a method to return a
+    dose function for the chosen parameters.
     """
     def __init__(self, initial_dose: float = 1.0, time_span: float = 1.0):
+        """Initialises a protocol object with chosen initial dose and time span.
+        Delivery method is held in the model object
+        (see: Model class documentation).
+
+        Args:
+            initial_dose (float): the chosen initial dose, default is 1.0 [ng]
+            time_span (float): the time span, the maximum time
+                of the simulation [hours]
+        """
         if type(initial_dose) not in [int, float]:
             raise TypeError('initial_dose must be int or float')
         if type(time_span) not in [int, float]:
@@ -24,28 +24,41 @@ class Protocol:
 
     @property
     def name(self) -> str:
-        """str: name is a property constructed from the protocol parameters.
+        """The name is a property constructed from the protocol parameters.
         This protects data integrity by tying results to an immutable label.
+
+        Args:
+            None
+        Returns:
+            name (string)
         """
-        self.__Name = "Protocol-initial_dose=" + str(self.__Initial_dose) + "-time_span=" + str(self.__Time_span)  # noqa: E501
-        # inline comment to flake8 to ignore line length needed for name string
+        self.__Name = ("Protocol-initial_dose=" + str(self.__Initial_dose)
+                       + "-time_span=" + str(self.__Time_span))
         return self.__Name
 
     def __str__(self):
-        """Returns the name of the model as a string.
+        """Returns:
+            the name of the model (string)
         """
         return self.name
 
-    # Want to be able to access the dose
     @property
     def initial_dose(self) -> float:
-        """float: The initial dose
+        """Access the initial dose.
+            Args:
+                None
+            Returns:
+                the initial dose (float)
         """
         return self.__Initial_dose
 
     @property
     def time_span(self) -> float:
-        """float: The time span
+        """Access the time span.
+            Args:
+                None
+            Returns:
+                time span (float) [hours]
         """
         return self.__Time_span
 
