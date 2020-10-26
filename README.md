@@ -22,7 +22,7 @@ PK Model is a useful library for quantitatively describing the absorption, distr
 
 The patient's body is modelled as one or more kinetically homogenous compartments: a primary central compartment into which the drug is administered and excreted, and zero or more peripheral compartments into which the drug may be distributed to/from. For example:
 
-![Image of equation](https://latex.codecogs.com/gif.latex?\frac{\mathrm{d}&space;q_{c}}{\mathrm{d}&space;t}=&space;Dose\left&space;(&space;t&space;\right&space;)-&space;\frac{q^{_{c}}}{V_{c}}CL&space;-&space;Q_{p1}\left&space;(&space;\frac{q_{c}}{V_{c}}&space;-&space;\frac{q_{p1}}{V_{p1}}\right&space;))
+![Image of equation](https://latex.codecogs.com/gif.latex?\frac{\mathrm{d}&space;q_{c}}{\mathrm{d}&space;t}=&space;Dose\left&space;(&space;t&space;\right&space;)-&space;\frac{q_{c}}{V_{c}}CL&space;-&space;Q_{p1}\left&space;(&space;\frac{q_{c}}{V_{c}}&space;-&space;\frac{q_{p1}}{V_{p1}}\right&space;))
 
 Where:
 
