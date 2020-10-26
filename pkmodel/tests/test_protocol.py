@@ -74,7 +74,8 @@ class ProtocolTest(unittest.TestCase):
         dose = protocol.dose
         self.assertEqual(str(type(dose)), "<class 'function'>")
         dose_func_in = lambda y, t: 0
-        dose_func_out = protocol.add_dose_function(func=dose_func_in)
+        protocol.add_dose_function(func=dose_func_in)
+        dose_func_out = protocol.dose
         self.assertEqual(dose_func_in, dose_func_out)
         with self.assertRaises(TypeError):
             dose_func = lambda z: 0
