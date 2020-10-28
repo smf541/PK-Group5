@@ -82,17 +82,17 @@ class SolutionTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             output = solution.ode_system()
         with self.assertRaises(TypeError):
-            output = solution.ode_system([1,2,3])
+            output = solution.ode_system([1, 2, 3])
         with self.assertRaises(TypeError):
-            output = solution.ode_system([1,2,3], 1)
+            output = solution.ode_system([1, 2, 3], 1)
         with self.assertRaises(TypeError):
-            output = solution.ode_system([1,2,3], 1, model)
+            output = solution.ode_system([1, 2, 3], 1, model)
         with self.assertRaises(TypeError):
-            output = solution.ode_system({'a':1}, 1, model, protocol)
+            output = solution.ode_system({'a': 1}, 1, model, protocol)
 
         with self.assertRaises(AssertionError):
-            output = solution.ode_system([1,2,3], 1, model, protocol)
-        
+            output = solution.ode_system([1, 2, 3], 1, model, protocol)
+
         # Test main compartmet output
         output = solution.ode_system([1], 1, model, protocol)
         self.assertEqual(output, [-0.5])

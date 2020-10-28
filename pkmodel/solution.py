@@ -72,10 +72,8 @@ class Solution:
         del self.models[index]
         del self.protocols[index]
 
-    def ode_system(self, q, t, model, protocol):
-        """Takes as input an array-like list of variables q, a float time t,
-        a Model object and a Protocol object, then returns the system of ODEs
-        for this pair.
+    def ode_system_validation(self, q, t, model, protocol):
+        """Performs validation on the ode_system input.
 
         Args:
             q (array-like object of variables q)
@@ -84,7 +82,7 @@ class Solution:
             protocol (Protocol object)
 
         Returns:
-            1-D list of functions of ordinary differential equations
+            Boolean
         """
         # Verify the time and q arguments
         if type(t) not in [int, float]:
@@ -99,6 +97,24 @@ class Solution:
             raise TypeError('The model must be a pkmodel Model')
         if type(protocol) != pk.Protocol:
             raise TypeError('The protocol must be a pkmodel Protocol')
+        return True
+
+    def ode_system(self, q, t, model, protocol):
+        """Takes as input an array-like list of variables q, a float time t,
+        a Model object and a Protocol object, then returns the system of ODEs
+        for this pair.
+
+        Args:
+            q (array-like object of variables q)
+            t (float): time [hours]
+            model (Model object)
+            protocol (Protocol object)
+
+        Returns:
+            1-D list of functions of ordinary differential equations
+        """
+        # Validate input
+        self.ode_system_validation(q, t, model, protocol)
 
         dose_fn = protocol.dose
         # get the number of variables in the model, from len(q)
