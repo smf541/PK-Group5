@@ -110,8 +110,8 @@ class SolutionTest(unittest.TestCase):
 
         # Test input validation
         with self.assertRaises(AssertionError):
-            output = solution.ode_system([1,2,3], 1, model, protocol)
-        
+            output = solution.ode_system([1, 2, 3], 1, model, protocol)
+
         # Test main compartmet output
         output = solution.ode_system([1, 2], 1, model, protocol)
         self.assertEqual(output, [-5, 3.5])
