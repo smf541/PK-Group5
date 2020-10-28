@@ -86,6 +86,20 @@ class Solution:
         Returns:
             1-D list of functions of ordinary differential equations
         """
+        # Verify the time and q arguments
+        if type(t) not in [int, float]:
+            raise TypeError('t must be a float or int')
+        if type(q) != list:
+            raise TypeError('The protocol must be a pkmodel Protocol')
+        for item in q:
+            if type(item) not in [int, float]:
+                raise TypeError('q must be array of float or int values')
+        # Verify the type of the model and protocol arguments
+        if type(model) != pk.Model:
+            raise TypeError('The model must be a pkmodel Model')
+        if type(protocol) != pk.Protocol:
+            raise TypeError('The protocol must be a pkmodel Protocol')
+
         dose_fn = protocol.dose
         # get the number of variables in the model, from len(q)
         num_variables = len(q)
