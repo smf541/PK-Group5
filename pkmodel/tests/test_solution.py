@@ -68,6 +68,59 @@ class SolutionTest(unittest.TestCase):
         with self.assertRaises(IndexError):
             solution.remove(0)
 
+    def test_ode_system(self):
+        """
+        Tests Solution ODE system.
+        """
+        # Test iv
+        solution = pk.Solution()
+        model = pk.Model('iv', V_c=2)
+        protocol = pk.Protocol()
+        solution.add(model, protocol)
+
+        # Test input validation
+        with self.assertRaises(TypeError):
+            output = solution.ode_system()
+        with self.assertRaises(TypeError):
+            output = solution.ode_system([1, 2, 3])
+        with self.assertRaises(TypeError):
+            output = solution.ode_system([1, 2, 3], 1)
+        with self.assertRaises(TypeError):
+            output = solution.ode_system([1, 2, 3], 1, model)
+        with self.assertRaises(TypeError):
+            output = solution.ode_system({'a': 1}, 1, model, protocol)
+
+        with self.assertRaises(AssertionError):
+            output = solution.ode_system([1, 2, 3], 1, model, protocol)
+
+        # Test main compartmet output
+        output = solution.ode_system([1], 1, model, protocol)
+        self.assertEqual(output, [-0.5])
+
+        # Test extra compartment output
+        model.add_compartment(V_p_new=2.0, Q_p_new=2.1)
+        output = solution.ode_system([3, 4], 1, model, protocol)
+        self.assertEqual(output, [-0.44999999999999996, -1.05])
+
+        # Test sc
+        solution = pk.Solution()
+        model = pk.Model('sc', V_c=2, CL=1.5, Ka=5)
+        protocol = pk.Protocol()
+        solution.add(model, protocol)
+
+        # Test input validation
+        with self.assertRaises(AssertionError):
+            output = solution.ode_system([1, 2, 3], 1, model, protocol)
+
+        # Test main compartmet output
+        output = solution.ode_system([1, 2], 1, model, protocol)
+        self.assertEqual(output, [-5, 3.5])
+
+        # Test extra compartment output
+        model.add_compartment(V_p_new=2.0, Q_p_new=2.1)
+        output = solution.ode_system([3, 4, 5], 1, model, protocol)
+        self.assertEqual(output, [-15, 14.1, -2.1])
+
     def test_solution_method(self):
         """
         Test the solution method in the Solution class.
