@@ -26,11 +26,12 @@ The patient's body is modelled as one or more kinetically homogenous compartment
 
 Where:
 
-    - Dose(t) is drug dose function (dosage with respect to time)
+    - Dose(t) is the drug dose function (dosage with respect to time)
     - Vc [mL] is the volume of the central compartment
+    - qc [ng] is the amount of drug in the central compartment
     - Vp1 [mL] is the volume of the first peripheral compartment
-    - Vp1 [mL] is the volume of the peripheral compartment 
-    - CL [mL/h] is the clearance/elimination rate from the central      compartment
+    - qp1 [ng] is the amount of drug in the first peripheral compartment
+    - CL [mL/h] is the clearance/elimination rate from the central compartment
     - Qp1 [mL/h] is the transition rate between central compartment and peripheral compartment 
 
 This easy-to-use package enables the drug quantity in each comparment to be tracked and visualised at different time points. It is highly versatile, enabling users to alter parameters such as the number of peripheral compartments, the type of dosing, the dosing protocol, and more.
@@ -40,9 +41,70 @@ PK Model is an up-and-coming Python package that strives to make pharmacokinetic
 
 ## Using the PK Model library
 
+Below is a helpful example to get you started. 
 
-#TODO: Add usage example once classes and functions are defined.
+```python
+import pkmodel as pk
 
+# Create a protocol object describing how the dose of drug is delivered
+# Set the initial dose to the patient to 100
+
+protocol = pk.Protocol(initial_dose=100)
+
+# Now specify how the drug is delivered dynamically,
+# with a function describing the rate of drug addition over time
+
+protocol.add_dose_function(lambda t, y: - y / (t + 1))
+
+# Now create a model object
+# Specify the drug is delivered intravenously with 'iv'.
+
+model = pk.Model('iv')
+
+# Add peripheral compartments to this model.
+# Specify the V_{p} and Q_{p} for each of these:
+
+model.add_compartment(V_p_new=2, Q_p_new=3)
+model.add_compartment(V_p_new=8, Q_p_new=0.5)
+
+# Now we want to visualise these.
+# Create a Solution object:
+
+solution = pk.Solution()
+
+# Add the protocol and model to this solution:
+
+solution.add(model, protocol)
+
+# Now visualise the solution of these two
+
+solution.visualise()
+
+# We can also compare multiple protocol and model pairs using this method.
+# Create a new protocol, with the same initial dose:
+
+protocol2 = pk.Protocol(initial_dose=100)
+
+# We will not input our own dosage function this time,
+# instead we use the default instantaneous dose function
+
+# Add model and this new protocol to the solution object for comparison:
+
+solution.add(model, protocol2)
+
+# Now visualise, choosing to either overlay the two graphs on the same plot:
+
+solution.visualise(layout='overlay')
+
+# Or have two plots side-by-side:
+
+solution.visualise(layout='side_by_side')
+
+# The outputs of these can be seen below.
+
+```
+
+You now have everything you need to start pkmodelling! Feel free to refer to our [documentation](https://pk-model.readthedocs.io/en/latest/ "PK Model Documentation") for further details. 
 
 ## Installing PK Model and Version Specification
 
