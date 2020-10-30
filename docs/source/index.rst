@@ -39,6 +39,7 @@ Documentation
    :members:
 
 .. automodule:: pkmodel.solution
+.. autoclass:: Solution
    :members:
 
 Indices and tables
