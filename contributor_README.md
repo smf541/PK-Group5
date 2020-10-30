@@ -3,7 +3,7 @@
 Thank you for joining us to work on this project! We hope that here you will find useful information to help you get started. If you think of anything that should be added, feel free to create an issue and propose the change.
 
 ## Clone our repo
-Start by [forking](https://guides.github.com/activities/forking/, "forking") our repo, then clone that on your local machine:
+Start by [forking](https://guides.github.com/activities/forking/ "forking") our repo, then clone that on your local machine:
 
 ```bash
 git clone git@github.com:YOURUSERNAME/PK-Group5.git
@@ -66,7 +66,7 @@ Adding the `--dev` flag will include development dependencies, and omitting `--w
 
 ### Linting
 
-Additions to the code should adhere to the [PEP8 Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/#introduction, "PEP8 Style Guide"). GitHub automatically tests your style with the Flake8 linter everytime you submit a pull request. We recommend linting your code while you write it as this can save time and commits later on! To enable linting with Flake8 in Visual Studio Code, open the Command Palette (<kbd>&#8679;</kbd><kbd>&#8984;</kbd><kbd>P</kbd> or <kbd>CTRL</kbd><kbd>SHIFT</kbd><kbd>P</kbd>) and click on the **Python: Select Linter** command. You can then select Flake8 from the dropdown list. 
+Additions to the code should adhere to the [PEP8 Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/#introduction "PEP8 Style Guide"). GitHub automatically tests your style with the Flake8 linter everytime you submit a pull request. We recommend linting your code while you write it as this can save time and commits later on! To enable linting with Flake8 in Visual Studio Code, open the Command Palette (<kbd>&#8679;</kbd><kbd>&#8984;</kbd><kbd>P</kbd> or <kbd>CTRL</kbd><kbd>SHIFT</kbd><kbd>P</kbd>) and click on the **Python: Select Linter** command. You can then select Flake8 from the dropdown list. 
 
 Unless there is a good reason for ignoring the linter, your pull request will not be granted until it passes these checks. The error messages are usually quite informative, but if you are not able to fix the issue you can contact a member of the core development team who will be happy to help.
 
@@ -74,11 +74,11 @@ Unless there is a good reason for ignoring the linter, your pull request will no
 
 All object names should be simple and descriptive. Most have one-word names, and where the name consists of multiple words, these are connected by an underscore. Care should be taken to avoid using protected words as variable names since this will prevent your code from being interpreted correctly.
 
-Parameter names are consistent with the variables of the model equations that form the base of [this library's functionalities](https://github.com/smf541/PK-Group5#about, "Functionality"). 
+Parameter names are consistent with the variables of the model equations that form the base of [this library's functionalities](https://github.com/smf541/PK-Group5#about "Functionality"). 
 
 ### Documentation
 
-The online documentation is created with Sphinx and hosted on [Read the Docs](https://pk-model.readthedocs.io/en/latest/, "Documentation") and is updated automatically at each pull request. It is set up to reflect the state of the master branch, so any changes you make to a side branch will not show up until they have been merged into the master. 
+The online documentation is created with Sphinx and hosted on [Read the Docs](https://pk-model.readthedocs.io/en/latest/ "Documentation") and is updated automatically at each pull request. It is set up to reflect the state of the master branch, so any changes you make to a side branch will not show up until they have been merged into the master. 
 
 Sphinx simply extracts the docstrings from each file in the code directory `pkmodel`, so please make sure your docstrings are informative. Ideally they should:
 
