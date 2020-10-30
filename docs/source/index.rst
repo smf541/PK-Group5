@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Welcome to the PK Model documentation!
-===================================
+==========================================
 
 We hope that you will find this page helpful as you learn to use the PKModel 
 library! You can use the functions we provided to specify, solve, and visualise 
