@@ -31,6 +31,12 @@ Join our `GitHub Repo <https://github.com/smf541/PK-Group5>`_ to work with us on
 Documentation
 ===============
 .. automodule:: pkmodel.model
+.. autoclass:: Model
+   :members:
+
+.. automodule:: pkmodel.protocol
+.. autoclass:: Protocol
+   :members:
 
 .. automodule:: pkmodel.solution
 .. autoclass:: Solution
