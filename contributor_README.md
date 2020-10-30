@@ -2,6 +2,14 @@
 
 Thank you for joining us to work on this project! We hope that here you will find useful information to help you get started. If you think of anything that should be added, feel free to create an issue and propose the change.
 
+## Clone our repo
+Start by [forking](https://guides.github.com/activities/forking/, "forking") our repo, then clone that on your local machine:
+
+```bash
+git clone git@github.com:YOURUSERNAME/PK-Group5.git
+cd PK-Group5
+```
+
 ## Setting up virtual environment
 To avoid confusion about which versions of python and any packages are being used, it's a good idea to work in a *virtual environment*.
 Here's how to set one up:
@@ -39,7 +47,7 @@ The console will print out a link which you can follow to create a pull request.
 
 If you are working on a branch for long periods of time, it can be a good idea to regularly merge the master branch into it so you stay up to date with the changes others have made in the meantime. To do this, type:
 ```bash
-git pull
+git fetch
 git merge origin/master
 ```
 
