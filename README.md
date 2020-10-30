@@ -28,8 +28,9 @@ Where:
 
     - Dose(t) is the drug dose function (dosage with respect to time)
     - Vc [mL] is the volume of the central compartment
+    - qc [ng] is the amount of drug in the central compartment
     - Vp1 [mL] is the volume of the first peripheral compartment
-    - Vp1 [mL] is the volume of the peripheral compartment 
+    - qp1 [ng] is the amount of drug in the first peripheral compartment
     - CL [mL/h] is the clearance/elimination rate from the central compartment
     - Qp1 [mL/h] is the transition rate between central compartment and peripheral compartment 
 
