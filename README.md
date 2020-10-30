@@ -54,7 +54,7 @@ protocol = pk.Protocol(initial_dose=100)
 # Now specify how the drug is delivered dynamically,
 # with a function describing the rate of drug addition over time
 
-protocol.add_dose_function(lambda t, y: - y / (t + 1))
+protocol.add_dose_function(lambda t, y: - 1 / (t + 1))
 
 # Now create a model object
 # Specify the drug is delivered intravenously with 'iv'.
