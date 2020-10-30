@@ -101,9 +101,9 @@ solution.visualise(layout='side_by_side')
 
 # The outputs of these can be seen below.
 
-# You now have everything you need to start pkmodelling!
 ```
 
+You now have everything you need to start pkmodelling! Feel free to refer to our [documentation](https://pk-model.readthedocs.io/en/latest/ "PK Model Documentation") for further details. 
 
 ## Installing PK Model and Version Specification
 
