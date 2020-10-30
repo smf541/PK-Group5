@@ -106,11 +106,14 @@ solution.visualise(layout='side_by_side')
 # The outputs of these can be seen below.
 
 ```
-![Figure: plot of model and protocol options overlay](./Figure_1.png)
-Figure 2: Plot of model with protocol 1 and model with protocol 2 overlay. Details of model and protocol will be printed to the terminal.
+![Figure: plot of model with protocol 1](./Figure_1.png)
+Figure 2: Plot of model with protocol 1. Details of the model and protocol will be printed to the terminal as labels.
+
+![Figure: plot of model and protocol options overlay](./Figure_overlay.png)
+Figure 3: Plot of model with protocol 1 and model with protocol 2 overlay. Details of model and protocol will be printed to the terminal as labels.
 
 ![Figure: plot of model and protocol options side by side](./Figure_sidebyside.png)
-Figure 3: Plot of model and protocol 1 and model with protocol 2 side by side. Details of model and protocol will be printed to the terminal.
+Figure 4: Plot of model and protocol 1 and model with protocol 2 side by side. Details of model and protocol will be printed to the terminal as labels.
 
 You now have everything you need to start pkmodelling! Feel free to refer to our [documentation](https://pk-model.readthedocs.io/en/latest/ "PK Model Documentation") for further details. 
 
