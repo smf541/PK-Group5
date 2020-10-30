@@ -32,8 +32,6 @@ Documentation
 ===============
 .. automodule:: pkmodel.model
 
-.. automodule:: pkmodel.protocol
-
 .. automodule:: pkmodel.solution
 .. autoclass:: Solution
    :members:
