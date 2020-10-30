@@ -22,7 +22,7 @@ copyright = '2020, Group 5'
 author = 'Group 5'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1.1'
+release = '1.0.0'
 
 
 # -- General configuration ---------------------------------------------------
