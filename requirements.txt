@@ -1,7 +1,7 @@
+--only-binary kiwisolver
 certifi
 cycler
 flake8
-kiwisolver
 matplotlib
 mccabe
 numpy
