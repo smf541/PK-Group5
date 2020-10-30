@@ -26,11 +26,11 @@ The patient's body is modelled as one or more kinetically homogenous compartment
 
 Where:
 
-    - Dose(t) is drug dose function (dosage with respect to time)
+    - Dose(t) is the drug dose function (dosage with respect to time)
     - Vc [mL] is the volume of the central compartment
     - Vp1 [mL] is the volume of the first peripheral compartment
     - Vp1 [mL] is the volume of the peripheral compartment 
-    - CL [mL/h] is the clearance/elimination rate from the central      compartment
+    - CL [mL/h] is the clearance/elimination rate from the central compartment
     - Qp1 [mL/h] is the transition rate between central compartment and peripheral compartment 
 
 This easy-to-use package enables the drug quantity in each comparment to be tracked and visualised at different time points. It is highly versatile, enabling users to alter parameters such as the number of peripheral compartments, the type of dosing, the dosing protocol, and more.
