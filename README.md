@@ -42,7 +42,7 @@ PK Model is an up-and-coming Python package that strives to make pharmacokinetic
 
 Below is a helpful example to get you started. 
 
----python
+```python
 import pkmodel as pk
 
 # Create a protocol object describing how the dose of drug is delivered
@@ -102,7 +102,7 @@ solution.visualise(layout='side_by_side')
 # The outputs of these can be seen below.
 
 # You now have everything you need to start pkmodelling!
----python
+```
 
 
 ## Installing PK Model and Version Specification
