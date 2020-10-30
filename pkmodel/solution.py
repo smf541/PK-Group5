@@ -85,12 +85,12 @@ class Solution:
             Boolean
         """
         # Verify the time and q arguments
-        if type(t) not in [int, float]:
+        if type(t) not in [int, float, numpy.float64]:
             raise TypeError('t must be a float or int')
-        if type(q) != list:
+        if type(q) not in [list, numpy.ndarray]:
             raise TypeError('q must be a list')
         for item in q:
-            if type(item) not in [int, float]:
+            if type(item) not in [int, float, numpy.float64]:
                 raise TypeError('q must be array of float or int values')
         # Verify the type of the model and protocol arguments
         if type(model) != pk.Model:
