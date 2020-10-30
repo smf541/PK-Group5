@@ -40,8 +40,69 @@ PK Model is an up-and-coming Python package that strives to make pharmacokinetic
 
 ## Using the PK Model library
 
+Below is a helpful example to get you started. 
 
-#TODO: Add usage example once classes and functions are defined.
+---python
+import pkmodel as pk
+
+# Create a protocol object describing how the dose of drug is delivered
+# Set the initial dose to the patient to 100
+
+protocol = pk.Protocol(initial_dose=100)
+
+# Now specify how the drug is delivered dynamically,
+# with a function describing the rate of drug addition over time
+
+protocol.add_dose_function(lambda t, y: - y / (t + 1))
+
+# Now create a model object
+# Specify the drug is delivered intravenously with 'iv'.
+
+model = pk.Model('iv')
+
+# Add peripheral compartments to this model.
+# Specify the V_{p} and Q_{p} for each of these:
+
+model.add_compartment(V_p_new=2, Q_p_new=3)
+model.add_compartment(V_p_new=8, Q_p_new=0.5)
+
+# Now we want to visualise these.
+# Create a Solution object:
+
+solution = pk.Solution()
+
+# Add the protocol and model to this solution:
+
+solution.add(model, protocol)
+
+# Now visualise the solution of these two
+
+solution.visualise()
+
+# We can also compare multiple protocol and model pairs using this method.
+# Create a new protocol, with the same initial dose:
+
+protocol2 = pk.Protocol(initial_dose=100)
+
+# We will not input our own dosage function this time,
+# instead we use the default instantaneous dose function
+
+# Add model and this new protocol to the solution object for comparison:
+
+solution.add(model, protocol2)
+
+# Now visualise, choosing to either overlay the two graphs on the same plot:
+
+solution.visualise(layout='overlay')
+
+# Or have two plots side-by-side:
+
+solution.visualise(layout='side_by_side')
+
+# The outputs of these can be seen below.
+
+# You now have everything you need to start pkmodelling!
+---python
 
 
 ## Installing PK Model and Version Specification
