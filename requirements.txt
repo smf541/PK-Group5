@@ -1,4 +1,4 @@
-wheel
+--only-binary kiwisolver
 certifi
 cycler
 flake8
