@@ -88,7 +88,7 @@ class Solution:
         if type(t) not in [int, float]:
             raise TypeError('t must be a float or int')
         if type(q) != list:
-            raise TypeError('The protocol must be a pkmodel Protocol')
+            raise TypeError('q must be a list')
         for item in q:
             if type(item) not in [int, float]:
                 raise TypeError('q must be array of float or int values')
